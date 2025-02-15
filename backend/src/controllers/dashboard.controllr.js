@@ -21,9 +21,22 @@ const getDashboard = async (req, res) => {
     const dashboard = await Dashboard.findOne({ user: req.user._id }).populate(
       "user"
     );
-
+    
     if (!dashboard) return res.status(404).json({ msg: "Dashboard not found" });
-    res.json(dashboard);
+
+    const data={
+      dsaLanguage:dashboard.languageForDsa,
+      rank:dashboard.rank===0?"N/A":dashboard.rank,
+      skills:dashboard.skills,
+      projects:dashboard.projects,
+      leetcode:{
+        url:dashboard.leetcode.url,
+        solvedProblems:dashboard.leetcode.solvedProblems,
+        calendar:dashboard.leetcode.calendar,
+        username:dashboard.leetcode.username
+      }
+    }
+    res.json(data);
   } catch (error) {
     res.status(500).json({ msg: "Server error" });
   }

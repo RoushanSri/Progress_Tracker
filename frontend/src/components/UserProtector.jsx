@@ -8,7 +8,7 @@ const UserProtector = ({children}) => {
 
     const navigate = useNavigate();
 
-    const {user, setUser} = useContext(userContext);
+    const {user, setUser, data, setData} = useContext(userContext);
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -32,7 +32,16 @@ const UserProtector = ({children}) => {
             localStorage.removeItem('token');
             navigate('/login');
         })
-    },[token])
+
+        axios.get("http://localhost:8080/api/dashboard/getDashboard",{
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }}).then((res) => {
+                setData(res.data);
+            }).catch((err) => {
+                console.log(err);
+            })
+},[token])
 
     if(isLoading) {
         return (

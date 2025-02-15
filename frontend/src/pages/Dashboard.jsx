@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import noImage from "../../public/noImage.webp";
 import leetcode from "../../public/leetcode.png";
 import gfg from "../../public/gfg.png";
@@ -9,22 +9,20 @@ import { FaInstagram, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import axios from "axios";
 import FormForPlatforms from "../components/FormForPlatforms";
+import { userContext } from "../context/userContext";
 
 const Dashboard = () => {
-  const [solved, setSolved] = useState("N/A");
-  const [username, setUsername] = useState("");
-  const [rank, setRank] = useState("N/A");
-  const [dsaLanguages, setDsaLanguages] = useState("N/A");
+
+  const {user, data} = useContext(userContext);
+
   const [editedLang, setEditedLang] = useState("");
   const [skills, setSkills] = useState([]);
-  const [projects, setProjects] = useState([]);
   const [pastFive, setPastFive] = useState([]);
   const [dbHistory, setDbHistory] = useState({});
   const [add, setAdd] = useState(false);
   const [editLang, setEditLang] = useState(false);
   const [newSkill, setNewSkill] = useState("");
   const [Leetcode, setLeetcode] = useState(false);
-  const [Lusername, setLusername] = useState("");
   const [addPlatformPopup, setAddPlatformPopup] = useState(false);
   const [Gfg, setGfg] = useState(false);
 
@@ -43,25 +41,11 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    const fetchDashboard = async () => {
-      const dashboard = await axios.get(
-        "http://localhost:8080/api/dashboard/getDashboard",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      setUsername(dashboard.data.user.username);
-      setRank(dashboard.data.rank == 0 ? "N/A" : dashboard.data.rank);
-      setSkills(dashboard.data.skills);
-      setDsaLanguages(
-        dashboard.data.languageForDsa == ""
-          ? "N/A"
-          : dashboard.data.languageForDsa
-      );
-      setDbHistory(dashboard.data.leetcode.calendar)
-      setLeetcode(dashboard.data.leetcode.url==""?false:true)
+    const fetchDashboard = async () => {   
+      if(data){   
+      setDbHistory(data.leetcode.calendar)
+      setLeetcode(data.leetcode.url==""?false:true)
+      }
       const matchDate = getPastFiveDays();      
       if(dbHistory.length!=0){              
       setPastFive(check(matchDate, dbHistory));      
@@ -69,11 +53,9 @@ const Dashboard = () => {
       else{
         setPastFive([0,0,0,0,0])
       }
-      setSolved(dashboard.data.leetcode.solvedProblems==-1?"N/A":dashboard.data.leetcode.solvedProblems)
-      setLusername(dashboard.data.leetcode.username)
     };
     fetchDashboard();
-  }, [dsaLanguages]);  
+  },[dbHistory]);  
 
   const handleAddSkill = async (e) => {
     e.preventDefault();
@@ -143,7 +125,7 @@ const Dashboard = () => {
             />
           </div>
           <h2 className="text-2xl font-bold mb-2 text-white text-center">
-            {username}
+            {user.username}
           </h2>
           <ul className="list-none flex justify-center gap-2">
             <li>
@@ -173,7 +155,7 @@ const Dashboard = () => {
                   <img src={leetcode} alt="LeetCode" className="w-6 h-6" />
                   <p className="text-white">LeetCode</p>
                   <a
-                    href={`https://leetcode.com/u/${Lusername}`}
+                    href={`https://leetcode.com/u/${data.leetcode.username}`}
                     target="blank"
                     className="flex items-center p-[1px] rounded-md hover:bg-purple-600"
                   >
@@ -211,8 +193,7 @@ const Dashboard = () => {
               setAddPlatformPopup={setAddPlatformPopup}
               setLeetcode={setLeetcode}
               Leetcode={Leetcode}
-              Lusername={Lusername}
-              setLusername={setLusername}
+              Lusername={data.leetcode.username}
             />
           )}
           <hr className="bg-gray-100 h-[0.5px]" />
@@ -236,21 +217,21 @@ const Dashboard = () => {
             Total Questions Solved..
           </h2>
           <p className="text-white text-center font-bold flex justify-center text-4xl items-center">
-            {solved}
+            {data.leetcode.solvedProblems===-1?'N/A':data.leetcode.solvedProblems}
           </p>
         </div>
         <div className="bg-gradient-to-tl from-purple-900 via-black to-purple-900 bg-opacity-90 shadow-lg rounded-lg p-4 sm:p-6 md:p-8 row-span-1 md:col-span-1 lg:col-span-2">
           <h2 className="text-xl font-semibold mb-2 text-white text-center">
             Leaderboard Ranking
           </h2>
-          <p className="text-white text-center font-bold text-4xl">{rank}</p>
+          <p className="text-white text-center font-bold text-4xl">{data.rank}</p>
         </div>
         <div className="bg-gradient-to-tl from-purple-900 via-black to-purple-900 relative bg-opacity-90 shadow-lg rounded-lg p-4 sm:p-6 md:p-8 row-span-2 md:col-span-1 lg:col-span-2">
           <h2 className="text-2xl font-semibold mb-5 text-white text-center">
             Skill Set
           </h2>
           <ul className="list-none flex gap-3 flex-wrap">
-            {skills.map((skill, i) => (
+            {data.skills.map((skill, i) => (
               <li key={i}>
                 <div className="bg-purple-400 px-2 rounded-full text-base">
                   <p className="text-white">{skill}</p>
@@ -313,7 +294,7 @@ const Dashboard = () => {
             Language For DSA
           </h2>
           <p className="text-gray-300 text-center text-2xl font-bold">
-            {dsaLanguages}
+            {data.dsaLanguage===''?'N/A':data.dsaLanguage}
           </p>
           <button
             onClick={() => setEditLang(true)}
@@ -356,9 +337,9 @@ const Dashboard = () => {
           <button className="absolute top-6 right-6 p-1 hover:bg-purple-600 rounded-md text-white">
             <MdAddCircleOutline size={"1.5rem"} color="orange" />
           </button>
-          {projects.length > 0 ? (
+          {data.projects.length > 0 ? (
             <ul className="list-none flex gap-4">
-              {projects.map((project, index) => (
+              {data.projects.map((project, index) => (
                 <li
                   key={index}
                   className="flex items-center gap-2 w-full border shadow-sm bg-purple-700 rounded-lg p-2"

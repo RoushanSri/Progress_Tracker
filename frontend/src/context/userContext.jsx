@@ -6,11 +6,23 @@ const UserContextProvider = ({children}) => {
     const [user, setUser] = useState({
         username: '',
         email: '',
-        password: ''
+        password: '',
+    });
+    const [data, setData]=useState({
+        dsaLanguage:'',
+        rank: '',
+        skills: [],
+        projects: [],
+        leetcode:{
+            url: '',
+            solvedProblems: '',
+            calendar: '',
+            username: ''
+        }
     });
 
     return (
-        <userContext.Provider value={{user, setUser}}>
+        <userContext.Provider value={{user, setUser, data, setData}}>
             {children}
         </userContext.Provider>
         )

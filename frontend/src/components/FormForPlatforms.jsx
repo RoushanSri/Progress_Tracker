@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import leetcode from "../../public/leetcode.png";
 import gfg from "../../public/gfg.png";
 import github from "../../public/github.webp";
-import { FaCheckSquare } from "react-icons/fa";
+import { BsFillPatchCheckFill } from "react-icons/bs";
 import axios from "axios";
 
 const FormForPlatforms = (props) => {
@@ -27,7 +27,6 @@ const FormForPlatforms = (props) => {
         const matchedUser=await data.data.data.matchedUser;
         if (matchedUser!=null){
           setColorL("green");
-          props.setLeetcode(true);
           const res = axios.post(
             "http://localhost:8080/api/dashboard/updateLeetcode",
             { data: matchedUser, leetcodeUsername: leetcodeUsername },
@@ -52,7 +51,7 @@ const FormForPlatforms = (props) => {
 
   useEffect(() => {
     if (props.Leetcode == true) {
-      setColorL("green");
+      setColorL("#6bf082");
     } else setColorL("white");
   }, []);
 
@@ -74,7 +73,7 @@ const FormForPlatforms = (props) => {
               onChange={(e) => setLeetcodeUsername(e.target.value)}
             />
             <button onClick={() => check("Leetcode")}>
-              <FaCheckSquare color={colorL} />
+              <BsFillPatchCheckFill color={colorL} />
             </button>
           </div>
           <div className="flex items-center gap-2">
@@ -87,7 +86,7 @@ const FormForPlatforms = (props) => {
               onChange={(e) => setGfgUsername(e.target.value)}
             />
             <button onClick={() => check("GFG")}>
-              <FaCheckSquare />
+              <BsFillPatchCheckFill />
             </button>
           </div>
           <div className="flex items-center gap-2">
@@ -100,11 +99,11 @@ const FormForPlatforms = (props) => {
               onChange={(e) => setGithubUsername(e.target.value)}
             />
             <button onClick={() => check("Github")}>
-              <FaCheckSquare />
+              <BsFillPatchCheckFill />
             </button>
           </div>
           <button
-            type="submit"
+            onClick={() => props.setAddPlatformPopup(false)}
             className="p-2 w-full rounded-md bg-purple-600 text-white"
           >
             Add Platforms
