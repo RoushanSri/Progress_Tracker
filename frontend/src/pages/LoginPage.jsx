@@ -21,8 +21,11 @@ const LoginPage = () => {
             const user = await axios.post('http://localhost:8080/api/auth/login', userData);
             localStorage.setItem("token", user.data.token);
             navigate('/dashboard');
+            await axios.post('http://localhost:8080/api/dashboard/refresh',
+                {},
+            )
         } catch (error) {
-            console.log(error);
+            console.log("chuda");
         }
         setEmail("");
         setPassword("");

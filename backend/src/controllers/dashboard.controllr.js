@@ -105,4 +105,25 @@ const updateLeetcode = async (req, res) => {
 }
 }
 
-export { getDashboard, createDashboard, addSkill, editLanguage, getLeetcode, updateLeetcode };
+const refreshAll = async (req, res) => {
+  try {
+    const dashData= await Dashboard.find({});
+              dashData.forEach(async item => {
+              if (item.leetcode.url != "") {                  
+                  const data = await axios.post(
+                      "http://localhost:8080/api/dashboard/leetcode",
+                      { leetcodeUsername: item.leetcode.username }
+                  );
+
+                  const matchedUser = await data.data.data.matchedUser;
+                  item.leetcode.solvedProblems = matchedUser.submitStats.acSubmissionNum[0].count;
+                  item.leetcode.calendar = matchedUser.submissionCalendar;
+                  item.save();
+              }})
+  } catch (error) {
+    console.log(error);
+  }
+  
+}
+
+export { getDashboard, createDashboard, addSkill, editLanguage, getLeetcode, updateLeetcode, refreshAll };

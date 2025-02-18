@@ -55,7 +55,7 @@ const Dashboard = () => {
       }
     };
     fetchDashboard();
-  },[dbHistory]);  
+    },[user,dbHistory]);  
 
   const handleAddSkill = async (e) => {
     e.preventDefault();
