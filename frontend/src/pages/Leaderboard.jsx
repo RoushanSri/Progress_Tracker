@@ -1,19 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const Leaderboard = () => {
-  const [data, setData] = useState([
-    { id: 1, name: "Alice", score: 95 },
-    { id: 2, name: "Bob", score: 90 },
-    { id: 3, name: "Charlie", score: 85 },
-    { id: 4, name: "David", score: 80 },
-    { id: 5, name: "Eve", score: 75 },
-  ]);
-
+  
+  const [data, setData] = useState([]);
+  useEffect(()=>{
+    const getAll=async()=>{
+      const dataS=await axios.get('http://localhost:8080/api/dashboard/getAll')
+      setData(dataS.data);
+    }
+    getAll();
+  },[])
   const handleSort = (key) => {
     const sortedData = [...data].sort((a, b) => b[key] - a[key]);
     setData(sortedData);
   };
-
+  
   return (
     <div className="mx-auto p-4 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 min-h-screen flex flex-col items-center">
       <h1 className="text-4xl font-extrabold mb-8 text-center text-white drop-shadow-lg">
@@ -34,6 +36,9 @@ const Leaderboard = () => {
               </th>
               <th className="py-4 px-6 text-left text-gray-300 font-bold uppercase tracking-wider">
                 Name
+              </th>
+              <th className="py-4 px-6 text-left text-gray-300 font-bold uppercase tracking-wider">
+                Language
               </th>
               <th className="py-4 px-6 text-left text-gray-300 font-bold uppercase tracking-wider">
                 Total
@@ -80,13 +85,19 @@ const Leaderboard = () => {
                   )}
                 </td>
                 <td className="py-4 px-6 ">{item.name}</td>
+                <td className="py-4 px-6">{item.language}</td>
                 <td className="py-4 px-6">{item.score}</td>
                 <td className="py-4 px-6 flex items-center gap-2">
-                  <div className="w-5 h-5 rounded-lg bg-green-500"></div>
-                  <div className="w-5 h-5 rounded-lg bg-green-500"></div>
-                  <div className="w-5 h-5 rounded-lg bg-green-500"></div>
-                  <div className="w-5 h-5 rounded-lg bg-green-500"></div>
-                  <div className="w-5 h-5 rounded-lg bg-green-500"></div>
+                  {
+                    item.previous.map((day, index) => (
+                      <div
+                        key={index}
+                        className={`${
+                          day == 0 ? "bg-red-500" : "bg-green-500"
+                        } w-5 h-5 rounded-md`}
+                      ></div>
+                    ))
+                  }
                 </td>
               </tr>
             ))}

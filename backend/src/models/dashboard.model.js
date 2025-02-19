@@ -5,6 +5,10 @@ const dashboardSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
+    past5:{
+        type: Array,
+        default:[0,0,0,0,0]
+    },
     leetcode:{
         url:{
             type: String,

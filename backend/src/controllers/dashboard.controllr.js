@@ -29,6 +29,7 @@ const getDashboard = async (req, res) => {
       rank:dashboard.rank===0?"N/A":dashboard.rank,
       skills:dashboard.skills,
       projects:dashboard.projects,
+      past5:dashboard.past5,
       leetcode:{
         url:dashboard.leetcode.url,
         solvedProblems:dashboard.leetcode.solvedProblems,
@@ -81,12 +82,40 @@ const getLeetcode = async (req, res) => {
     
   }
 }
+const getPastFiveDays= ()=> {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const pastFiveDays = [];
+
+  for (let i = 4; i >= 0; i--) {
+    const pastDate = new Date(today);
+    pastDate.setDate(today.getDate() - i);   
+    const utcTimestamp = Date.UTC(pastDate.getFullYear(), pastDate.getMonth(), pastDate.getDate());
+    pastFiveDays.push( utcTimestamp/1000);
+  }    
+  return pastFiveDays;
+}  
+
+const check=async (matchDate, dbHistory)=> {      
+  const dbObject=JSON.parse(dbHistory);      
+  const set = new Set(Object.keys(dbObject).map(Number));
+  const finalDate = [0,0,0,0,0]
+  for(let i=4; i>=0; i--) {
+      if(set.has(matchDate[i])) {             
+        finalDate[i]=1                  
+      }}      
+  return finalDate;
+}
 
 const updateLeetcode = async (req, res) => {
   const {data, leetcodeUsername} = req.body;
   
-  try {
+  try {   
+    const pastFiveDays=getPastFiveDays();
+    const record=await check(pastFiveDays, data.submissionCalendar);
+    
     const dashboard = await Dashboard.findOneAndUpdate({ user: req.user._id },{
+      past5: record,
       leetcode: {
         url: "https://leetcode.com/u/"+leetcodeUsername,
         solvedProblems: data.submitStats.acSubmissionNum[0].count,
@@ -116,6 +145,7 @@ const refreshAll = async (req, res) => {
                   );
 
                   const matchedUser = await data.data.data.matchedUser;
+                  item.past5 = await check(getPastFiveDays(), matchedUser.submissionCalendar);                  
                   item.leetcode.solvedProblems = matchedUser.submitStats.acSubmissionNum[0].count;
                   item.leetcode.calendar = matchedUser.submissionCalendar;
                   item.save();
@@ -126,4 +156,17 @@ const refreshAll = async (req, res) => {
   
 }
 
-export { getDashboard, createDashboard, addSkill, editLanguage, getLeetcode, updateLeetcode, refreshAll };
+const getAll= async (req, res) => {
+  try {
+    const collection= await Dashboard.find({}).populate('user');
+    const ds=collection.map((item, key) => {
+      
+      return { name: item.user.username, score: item.leetcode.solvedProblems, language: item.languageForDsa, previous: item.past5 };
+    })
+    res.status(200).json(ds);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export { getDashboard, createDashboard, addSkill, editLanguage, getLeetcode, updateLeetcode, refreshAll, getAll};

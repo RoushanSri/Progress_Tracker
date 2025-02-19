@@ -17,8 +17,6 @@ const Dashboard = () => {
 
   const [editedLang, setEditedLang] = useState("");
   const [skills, setSkills] = useState([]);
-  const [pastFive, setPastFive] = useState([]);
-  const [dbHistory, setDbHistory] = useState({});
   const [add, setAdd] = useState(false);
   const [editLang, setEditLang] = useState(false);
   const [newSkill, setNewSkill] = useState("");
@@ -26,36 +24,14 @@ const Dashboard = () => {
   const [addPlatformPopup, setAddPlatformPopup] = useState(false);
   const [Gfg, setGfg] = useState(false);
 
-  const getPastFiveDays= ()=> {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const pastFiveDays = [];
-  
-    for (let i = 4; i >= 0; i--) {
-      const pastDate = new Date(today);
-      pastDate.setDate(today.getDate() - i);
-      const utcTimestamp = Date.UTC(pastDate.getUTCFullYear(), pastDate.getUTCMonth(), pastDate.getUTCDate());
-      pastFiveDays.push( utcTimestamp/1000);
-    }    
-    return pastFiveDays;
-  }
-
   useEffect(() => {
     const fetchDashboard = async () => {   
       if(data){   
-      setDbHistory(data.leetcode.calendar)
       setLeetcode(data.leetcode.url==""?false:true)
-      }
-      const matchDate = getPastFiveDays();      
-      if(dbHistory.length!=0){              
-      setPastFive(check(matchDate, dbHistory));      
-      }
-      else{
-        setPastFive([0,0,0,0,0])
       }
     };
     fetchDashboard();
-    },[user,dbHistory]);  
+    },[user]);
 
   const handleAddSkill = async (e) => {
     e.preventDefault();
@@ -91,23 +67,7 @@ const Dashboard = () => {
     setEditLang(false);
     setDsaLanguages(editLang);
   };
-
-  const check= (matchDate, dbHistory)=> {
     
-    const dbObject=JSON.parse(dbHistory);
-    
-    const set = new Set(Object.keys(dbObject).map(Number));
-
-    const finalDate = [0,0,0,0,0]
-    for(let i=4; i>=0; i--) {
-        if(set.has(matchDate[i])) {
-          finalDate[i]=1                    
-        }   
-      }    
-      
-         
-    return finalDate;
-    }
   
 
   return (
@@ -279,7 +239,7 @@ const Dashboard = () => {
           </h2>
           <div className="flex justify-center items-center gap-2">
             {
-            pastFive.map((day, index) => (
+            data.past5.map((day, index) => (
               <div
                 key={index}
                 className={`${

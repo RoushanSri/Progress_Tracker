@@ -13,6 +13,7 @@ const UserContextProvider = ({children}) => {
         rank: '',
         skills: [],
         projects: [],
+        past5: [0,0,0,0,0],
         leetcode:{
             url: '',
             solvedProblems: '',
