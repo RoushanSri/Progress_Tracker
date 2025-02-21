@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { FaUser, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
-import logo from '../../public/Newton-School.png';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import img from '../../public/float.png'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -10,7 +10,7 @@ const LoginPage = () => {
     
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false); // Added to manage password visibility
+    const [showPassword, setShowPassword] = useState(false); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -95,12 +95,11 @@ const LoginPage = () => {
                     <h2 className="mb-2 text-6xl font-bold text-white">
                         Welcome to
                         <br />
-                        student portal
+                        Student Portal
                     </h2>
                     <p className="mb-8 text-purple-200">Login to access your account</p>
                     <img
-                        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Student%20Portal%20Login%20UI.jpg-DmSzNwwaRek7WMq1RVGLzOqFqeZiaq.jpeg"
-                        alt="Students studying illustration"
+                        src={img}
                         className="max-w-lg"
                     />
                 </div>
