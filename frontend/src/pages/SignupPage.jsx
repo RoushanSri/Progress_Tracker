@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
-import { FaUser, FaEnvelope, FaLock } from 'react-icons/fa';
-import logo from '../../public/Newton-School.png';
-import {useNavigate} from 'react-router-dom';
+import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
+import logo from '../../public/float.png';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const SignupPage = () => {
-
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false); // Added state for showPassword
 
-    const handleSubmit =  async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const userData = {
             email,
             username,
             password
-        }
+        };
         try {
             const user = await axios.post('http://localhost:8080/api/auth/signup', userData);
             localStorage.setItem("token", user.data.token);
@@ -27,13 +27,11 @@ const SignupPage = () => {
         }
         try {
             const token = localStorage.getItem("token");
-            const dashboard = await axios.post('http://localhost:8080/api/dashboard/createDashboard',{},
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            )
+            const dashboard = await axios.post('http://localhost:8080/api/dashboard/createDashboard', {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
             navigate('/dashboard');
         } catch (error) {
             console.log(error);
@@ -43,76 +41,85 @@ const SignupPage = () => {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 overflow-hidden p-4 sm:p-6 lg:p-8">
-            <div className="bg-gray-800 p-6 sm:p-8 lg:p-10 rounded-lg shadow-2xl w-full max-w-md transform transition duration-500 hover:scale-105">
-                <img
-                    className="mx-auto h-24 w-24 object-cover animate-bounce"
-                    src={logo}
-                />
-                <h2 className="text-3xl font-extrabold text-white mb-6 text-center animate-pulse">Sign Up</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-4">
-                        <label className="block text-gray-400 mb-2" htmlFor="username">
-                            Username
-                        </label>
-                        <div className="flex items-center bg-gray-700 rounded-lg">
-                            <FaUser className="text-gray-400 ml-3" />
+        <div className="flex flex-row-reverse min-h-screen">
+            {/* Left Column - Signup Form */}
+            <div className="flex w-full flex-col justify-center bg-zinc-900 md:w-1/2 md:px-12 lg:px-16">
+                <div className="mx-[6vw] w-full max-w-sm">
+                    <h1 className="mb-2 text-[3vw] font-semibold text-white">Sign Up</h1>
+                    <p className="mb-8 text-sm text-zinc-400">Enter your account details</p>
+
+                    <form className="space-y-4" onSubmit={handleSubmit}>
+                        <div>
                             <input
                                 type="text"
-                                id="username"
-                                className="bg-gray-700 text-white rounded-lg w-full py-2 px-3 focus:outline-none"
-                                placeholder="Enter your Username"
+                                placeholder="Username"
+                                className="w-full rounded-md border border-zinc-800 bg-zinc-900 px-3 py-2 text-white placeholder-zinc-500 focus:border-purple-500 focus:outline-none"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                             />
                         </div>
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-gray-400 mb-2" htmlFor="email">
-                            Email
-                        </label>
-                        <div className="flex items-center bg-gray-700 rounded-lg">
-                            <FaEnvelope className="text-gray-400 ml-3" />
+
+                        <div>
                             <input
                                 type="email"
-                                id="email"
-                                className="bg-gray-700 text-white rounded-lg w-full py-2 px-3 focus:outline-none"
-                                placeholder="Enter your Email"
+                                placeholder="Email"
+                                className="w-full rounded-md border border-zinc-800 bg-zinc-900 px-3 py-2 text-white placeholder-zinc-500 focus:border-purple-500 focus:outline-none"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
-                    </div>
-                    <div className="mb-6">
-                        <label className="block text-gray-400 mb-2" htmlFor="password">
-                            Password
-                        </label>
-                        <div className="flex items-center bg-gray-700 rounded-lg">
-                            <FaLock className="text-gray-400 ml-3" />
+
+                        <div className="relative">
                             <input
-                                type="password"
-                                id="password"
-                                className="bg-gray-700 text-white rounded-lg w-full py-2 px-3 focus:outline-none"
-                                placeholder="Enter your Password"
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Password"
+                                className="w-full rounded-md border border-zinc-800 bg-zinc-900 px-3 py-2 text-white placeholder-zinc-500 focus:border-purple-500 focus:outline-none"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500"
+                            >
+                                {showPassword ? <FaEyeSlash className="h-5 w-5" /> : <FaEye className="h-5 w-5" />}
+                            </button>
                         </div>
+
+                        <button
+                            type="submit"
+                            className="w-full rounded-md bg-purple-600 py-2 text-white transition-colors hover:bg-purple-700"
+                        >
+                            Sign Up
+                        </button>
+                    </form>
+
+                    <div className="mt-8 text-center text-sm text-zinc-400">
+                        Already have an account? 
+                        <Link to="/login" className="text-purple-500 hover:underline">
+                            Login
+                        </Link>
                     </div>
-                    <button
-                        type="submit"
-                        className="w-full bg-gradient-to-r from-green-400 to-blue-500 text-white py-2 rounded-lg hover:from-green-500 hover:to-blue-600 transition duration-300 transform hover:scale-105"
-                    >
-                        Sign Up
-                    </button>
-                </form>
-                <p className="text-center text-gray-400 mt-4">
-                    Already have an account? <span onClick={() => navigate('/login')} className='text-blue-400 hover:text-blue-600 duration-300 cursor-pointer'>Login</span>
-                </p>
+                </div>
+            </div>
+
+            {/* Right Column - Welcome Banner */}
+            <div className="hidden bg-purple-600 md:flex md:w-1/2">
+                <div className="flex flex-col items-center py-6 px-[12vw] text-center">
+                    <h2 className="mb-2 text-6xl font-bold text-white">
+                        Welcome to
+                        <br />
+                        Student Portal
+                    </h2>
+                    <p className="mb-8 text-purple-200">Sign up to create your account</p>
+                    <img
+                        src={logo}
+                        className="max-w-lg"
+                    />
+                </div>
             </div>
         </div>
     );
 };
 
 export default SignupPage;
-                
