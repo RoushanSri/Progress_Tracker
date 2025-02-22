@@ -1,40 +1,57 @@
 import React from 'react';
-import logo from '../../public/Newton-School.png';
+import logo from '../../public/homepage.jpeg';
 import { useNavigate } from 'react-router-dom';
 
-
 const HomePage = () => {
-
     const navigate = useNavigate();
 
     return (
-        <div className="h-[calc(100vh-4rem)] flex flex-col items-center justify-center bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 overflow-hidden p-4">
-            <div className="bg-gray-800 p-8 rounded-lg shadow-2xl w-full max-w-4xl transform transition duration-500 hover:scale-105">
-                <img
-                    className="mx-auto h-24 w-24 object-cover animate-bounce"
-                    src={logo}
-                    alt="Logo"
-                />
-                <h1 className="text-4xl font-extrabold text-white mb-6 text-center animate-pulse">Welcome to Progress Tracker</h1>
-                <p className="text-gray-400 text-center mb-8">
+        <main className="min-h-screen bg-black text-white">
+          {/* Hero Section */}
+          <div
+            className="relative min-h-screen flex items-center justify-center"
+            // style={{
+            //   backgroundImage: url(${logo}),
+            //   backgroundSize: "cover",
+            //   backgroundPosition: "center",
+            // }}
+          >
+            <div className="absolute inset-0 bg-black/20" />
+
+            <div className="relative container mx-auto px-4 text-center">
+              <h1 className="text-5xl md:text-6xl font-medium mb-4 text-[#155E95]">
+                Welcome to Progress Tracker
+              </h1>
+
+              <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto">
                 Track your progress, get instant doubt assistance, and stay motivated with our user-friendly platform..
-                </p>
-                <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                    <button
-                        className="bg-gradient-to-r from-green-400 to-blue-500 text-white py-2 px-4 rounded-lg hover:from-green-500 hover:to-blue-600 transition duration-300 transform hover:scale-105"
-                        onClick={() => navigate("/signup")}
-                    >
-                        Get Started
-                    </button>
-                    <button
-                        className="bg-gradient-to-r from-red-400 to-pink-500 text-white py-2 px-4 rounded-lg hover:from-red-500 hover:to-pink-600 transition duration-300 transform hover:scale-105"
-                        onClick={() => navigate("/login")}
-                    >
-                        Learn More
-                    </button>
+              </p>
+
+              <div className="flex justify-center items-center gap-2">
+                <button
+                  className="bg-[#155E95] text-white py-2 px-4 rounded-lg hover:bg-3D8D7A-dark transition duration-300 transform hover:scale-105"
+                  onClick={() => navigate("/signup")}
+                >
+                  Get Started
+                </button>
+                <button
+                  className="bg-[#155E95] text-white py-2 px-4 rounded-lg hover:bg-3D8D7A-dark transition duration-300 transform hover:scale-105"
+                  onClick={() => navigate("/login")}
+                >
+                  Learn More
+                </button>
+              </div>
+
+              {/* Featured Section */}
+              <div className="mt-24">
+                <p className="text-sm text-white/70 mb-6">Recognized as a leading platform for progress tracking and goal achievement.</p>
+                <div className="flex justify-center items-center gap-8 grayscale opacity-70">
+                  <div className="text-white font-serif text-2xl">Unlock Your Progress</div>
                 </div>
+              </div>
             </div>
-        </div>
+          </div>
+        </main>
     );
 };
 
