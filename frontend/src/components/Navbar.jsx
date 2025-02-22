@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import logo from '../../public/Newton-School.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import { IoIosSettings } from "react-icons/io";
 const Navbar = () => {
 
     const [menuOpen, setMenuOpen] = useState(false);
@@ -66,6 +66,12 @@ const Navbar = () => {
                             </li>
                             <li className={`hover:bg-purple-500 rounded transition duration-300 py-1 ${getActiveClass('/material')}`}>
                                 <Link to="/material" className="text-gray-300 md:flex justify-center hover:text-white px-3 py-2 active:bg-purple-500">Material</Link>
+                            </li>
+                            
+                            <li className={`hover:bg-purple-500 rounded transition duration-300 py-1 ${getActiveClass('/settings')}`}>
+                                <Link to="/settings" className="text-gray-300 md:flex justify-center hover:text-white px-3 py-2 active:bg-purple-500 flex items-center">
+                                    <IoIosSettings className="h-6 w-6" />  {/* Increased height and width */}
+                                </Link>
                             </li>
                             <li className="hover:bg-purple-500 rounded transition duration-300 md:flex justify-center">
                                     <button onClick={handleLogout} className="text-gray-300 hover:text-white px-3 py-1 active:bg-purple-500 flex items-center">

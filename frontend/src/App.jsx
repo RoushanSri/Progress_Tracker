@@ -7,6 +7,7 @@ import UserProtector from "./components/UserProtector";
 import Dashboard from "./pages/Dashboard";
 import Leaderboard from "./pages/Leaderboard";
 import Doubts from "./pages/Doubts";
+import SettingsPage from "./pages/Settings_page";
 function App() {
   return (
     <>
@@ -23,6 +24,9 @@ function App() {
         </UserProtector>}/>
         <Route path="/doubts" element={<UserProtector>
           <Doubts/>
+        </UserProtector>}/>
+        <Route path="/settings" element={<UserProtector>
+          <SettingsPage/>
         </UserProtector>}/>
       </Routes>
     </>
