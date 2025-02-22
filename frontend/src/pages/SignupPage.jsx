@@ -41,7 +41,7 @@ const SignupPage = () => {
     }
 
     return (
-        <div className="flex flex-row-reverse min-h-screen">
+        <div className="flex flex-row-reverse min-h-screen bg-zinc-900">
             {/* Left Column - Signup Form */}
             <div className="flex w-full flex-col justify-center bg-zinc-900 md:w-1/2 md:px-12 lg:px-16">
                 <div className="mx-[6vw] w-full max-w-sm">
@@ -53,7 +53,7 @@ const SignupPage = () => {
                             <input
                                 type="text"
                                 placeholder="Username"
-                                className="w-full rounded-md border border-zinc-800 bg-zinc-900 px-3 py-2 text-white placeholder-zinc-500 focus:border-purple-500 focus:outline-none"
+                                className="w-full rounded-md border border-zinc-800 bg-zinc-900 px-3 py-2 text-white placeholder-zinc-500 focus:border-[#155E95] focus:outline-none"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                             />
@@ -63,7 +63,7 @@ const SignupPage = () => {
                             <input
                                 type="email"
                                 placeholder="Email"
-                                className="w-full rounded-md border border-zinc-800 bg-zinc-900 px-3 py-2 text-white placeholder-zinc-500 focus:border-purple-500 focus:outline-none"
+                                className="w-full rounded-md border border-zinc-800 bg-zinc-900 px-3 py-2 text-white placeholder-zinc-500 focus:border-[#155E95] focus:outline-none"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
@@ -73,7 +73,7 @@ const SignupPage = () => {
                             <input
                                 type={showPassword ? "text" : "password"}
                                 placeholder="Password"
-                                className="w-full rounded-md border border-zinc-800 bg-zinc-900 px-3 py-2 text-white placeholder-zinc-500 focus:border-purple-500 focus:outline-none"
+                                className="w-full rounded-md border border-zinc-800 bg-zinc-900 px-3 py-2 text-white placeholder-zinc-500 focus:border-[#155E95] focus:outline-none"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
@@ -88,7 +88,7 @@ const SignupPage = () => {
 
                         <button
                             type="submit"
-                            className="w-full rounded-md bg-purple-600 py-2 text-white transition-colors hover:bg-purple-700"
+                            className="w-full rounded-md bg-[#155E95] py-2 text-white transition-colors hover:bg-[#155E95]"
                         >
                             Sign Up
                         </button>
@@ -96,7 +96,7 @@ const SignupPage = () => {
 
                     <div className="mt-8 text-center text-sm text-zinc-400">
                         Already have an account? 
-                        <Link to="/login" className="text-purple-500 hover:underline">
+                        <Link to="/login" className="text-[#155E95] hover:underline">
                             Login
                         </Link>
                     </div>
@@ -104,8 +104,8 @@ const SignupPage = () => {
             </div>
 
             {/* Right Column - Welcome Banner */}
-            <div className="hidden bg-purple-600 md:flex md:w-1/2">
-                <div className="flex flex-col items-center py-6 px-[12vw] text-center">
+            <div className="flex justify-end md:flex md:w-1/2 py-[3vw]">
+                <div className="flex flex-col bg-[#155E95] rounded-lg items-center py-6 px-16 text-center">
                     <h2 className="mb-2 text-6xl font-bold text-white">
                         Welcome to
                         <br />
