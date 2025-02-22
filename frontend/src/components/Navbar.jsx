@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import logo from '../../public/Newton-School.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import { IoIosSettings } from "react-icons/io";
 const Navbar = () => {
 
     const [menuOpen, setMenuOpen] = useState(false);
@@ -67,6 +67,12 @@ const Navbar = () => {
                             <li className={`hover:bg-zinc-900 rounded transition duration-300 px-4 py-1 flex items-center ${getActiveClass('/material')}`}>
                                 <Link to="/material" className="text-gray-300 md:flex justify-center hover:text-white active:bg-zinc-900">Material</Link>
                             </li>
+                            
+                            <li className={`hover:bg-zinc-900 rounded transition duration-300 px-4 py-1 flex items-center ${getActiveClass('/settings')}`}>
+                                <Link to="/settings" className="text-gray-300 md:flex justify-center active:bg-zinc-900">
+                                    <IoIosSettings className="h-6 w-6" />  {/* Increased height and width */}
+                                </Link>
+                            </li>
                             <li className="hover:bg-zinc-900 rounded transition duration-300 md:flex px-3 py-1 justify-center">
                                 <button onClick={handleLogout} className="text-gray-300 hover:text-white active:bg-zinc-900 flex items-center">
                                     <svg className="h-5 w-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -75,7 +81,7 @@ const Navbar = () => {
                                     Logout
                                 </button>
                             </li>
-                        </>
+                            </>
                     ) : (
                         <>
                             <li className={`hover:bg-zinc-900 rounded px-4 py-1 flex items-center transition duration-300 ${getActiveClass('/')}`}>
