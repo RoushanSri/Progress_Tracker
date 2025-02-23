@@ -1,4 +1,5 @@
 import User from "../models/user.model.js";
+import cloudinary from '../lib/cloudinary.js';
 
 const signUp=async(req, res)=>{
     const {username, email, password} = req.body;
@@ -63,8 +64,35 @@ const logOut = async(req, res)=>{
 }
 
 const getUserProfile = async(req, res)=>{   
-         
     res.status(200).json(req.user);
 }
 
-export {signUp, logIn, logOut, getUserProfile};
+const updateAvatar = async(req, res)=>{
+    const {avatar} = req.body;
+    if(!avatar)
+        return res.status(400).json({msg: 'Please upload an image'});
+    
+    try {
+        const uploadResponse = await cloudinary.uploader.upload(avatar);
+        const updatedUser = await User.findByIdAndUpdate(req.user._id, {avatar: uploadResponse.url}, {new: true});
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        res.status(500).json({msg: 'Server error'});
+    }
+}
+
+const updateUsername= async(req, res)=>{
+    const {username} = req.body;
+    if(!username)
+        return res.status(400).json({msg: 'Please enter a username'});
+    
+    try {
+        const updatedUser = await User.findByIdAndUpdate(req.user._id, {username}, {new: true});
+        res.status(200).json(updatedUser);
+        
+    } catch (error) {
+        res.status(500).json({msg: 'Server error'});
+    }
+}
+
+export {signUp, logIn, logOut, getUserProfile, updateAvatar, updateUsername};

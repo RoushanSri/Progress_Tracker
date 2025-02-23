@@ -56,7 +56,7 @@ const Navbar = () => {
                     {isLoggedIn ? (
                         <>
                             <li className={`hover:bg-zinc-900 rounded transition duration-300 px-4 py-1 flex items-center ${getActiveClass('/dashboard')}`}>
-                                <Link to="/dashboard" className="text-gray-300 md:flex justify-center hover:text-white active:bg-gray-700">Dashboard</Link>
+                                <Link to="/dashboard" className="text-gray-300 md:flex justify-center hover:text-white active:bg-zinc-900">Dashboard</Link>
                             </li>
                             <li className={`hover:bg-zinc-900 rounded transition duration-300 px-4 py-1 flex items-center ${getActiveClass('/leaderboard')}`}>
                                 <Link to="/leaderboard" className="text-gray-300 md:flex justify-center hover:text-white active:bg-zinc-900">Leaderboard</Link>
@@ -70,7 +70,7 @@ const Navbar = () => {
                             
                             <li className={`hover:bg-zinc-900 rounded transition duration-300 px-4 py-1 flex items-center ${getActiveClass('/settings')}`}>
                                 <Link to="/settings" className="text-gray-300 md:flex justify-center active:bg-zinc-900">
-                                    <IoIosSettings className="h-6 w-6" />  {/* Increased height and width */}
+                                    <IoIosSettings className="h-6 w-6" />
                                 </Link>
                             </li>
                             <li className="hover:bg-zinc-900 rounded transition duration-300 md:flex px-3 py-1 justify-center">

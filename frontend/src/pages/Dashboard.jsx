@@ -79,7 +79,7 @@ const Dashboard = () => {
         <div className="bg-gradient-to-tl from-purple-900 via-black to-purple-900 bg-opacity-90 flex flex-col gap-5 shadow-lg rounded-lg p-4 sm:p-6 md:p-8 row-span-5 md:col-span-2 lg:col-span-2">
           <div className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 overflow-hidden rounded-full mx-auto">
             <img
-              src={noImage}
+              src={user.avatar||noImage}
               alt="Avatar"
               className="object-cover w-full h-full"
             />

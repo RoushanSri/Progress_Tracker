@@ -7,6 +7,7 @@ const UserContextProvider = ({children}) => {
         username: '',
         email: '',
         password: '',
+        avtar:'',
     });
     const [data, setData]=useState({
         dsaLanguage:'',
