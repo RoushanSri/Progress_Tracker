@@ -6,15 +6,10 @@ const HomePage = () => {
     const navigate = useNavigate();
 
     return (
-        <main className="min-h-screen bg-black text-white">
+        <main className="bg-black text-white">
           {/* Hero Section */}
           <div
             className="relative min-h-screen flex items-center justify-center"
-            // style={{
-            //   backgroundImage: url(${logo}),
-            //   backgroundSize: "cover",
-            //   backgroundPosition: "center",
-            // }}
           >
             <div className="absolute inset-0 bg-black/20" />
 

@@ -21,7 +21,7 @@ const LoginPage = () => {
         try {
             const user = await axios.post('http://localhost:8080/api/auth/login', userData);
             localStorage.setItem("token", user.data.token);
-            navigate('/dashboard');
+            navigate('/u/dashboard');
             await axios.post('http://localhost:8080/api/dashboard/refresh',
                 {},
             )
@@ -33,7 +33,7 @@ const LoginPage = () => {
     }
 
     return (
-        <div className="flex min-h-screen bg-zinc-900">
+        <div className="flex bg-zinc-900">
             {/* Left Column - Login Form */}
             <div className="flex w-full flex-col justify-center  bg-zinc-900  md:w-1/2 md:px-12 lg:px-16">
                 <div className="mx-[12vw] w-full max-w-sm">

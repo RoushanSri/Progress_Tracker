@@ -1,8 +1,4 @@
-import { Route, RouterProvider, Routes } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
-import HomePage from "./pages/HomePage";
-import Navbar from "./components/Navbar";
+import { Route, Routes } from "react-router-dom";
 import UserProtector from "./components/UserProtector";
 import Dashboard from "./pages/Dashboard";
 import Leaderboard from "./pages/Leaderboard";
@@ -13,59 +9,45 @@ import Profile from "./components/Profile";
 import Socials from "./components/Socials";
 import Platforms from "./components/Platforms";
 import Account from "./components/Account";
+import AuthLayout from "./pages/AuthLayout";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import MainLayout from "./pages/MainLayout";
+import Demo from "./pages/Demo";
 
 function App() {
   return (
     <>
-      <Navbar />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/" element={<AuthLayout />}>
+          <Route path="" element={<HomePage/>}/>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+        </Route>
         <Route
-          path="/dashboard"
+          path="/u/"
           element={
             <UserProtector>
-              <Dashboard />
+              <MainLayout />
             </UserProtector>
           }
-        />
-        <Route
-          path="/leaderboard"
+        >
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="material" element={<Material />} />
+          <Route path="doubts" element={<Doubts />} />
+          <Route path="leaderboard" element={<Leaderboard />} />
+          <Route
+          path="settings"
           element={
-            <UserProtector>
-              <Leaderboard />
-            </UserProtector>
-          }
-        />
-        <Route
-          path="/doubts"
-          element={
-            <UserProtector>
-              <Doubts />
-            </UserProtector>
-          }
-        />
-        <Route
-          path="/material"
-          element={
-            <UserProtector>
-              <Material />
-            </UserProtector>
-          }
-        />
-        <Route
-          path="/settings"
-          element={
-            <UserProtector>
               <SettingsPage />
-            </UserProtector>
           }
         >
           <Route path="" element={<Profile />} />
           <Route path="socials" element={<Socials />} />
           <Route path="platforms" element={<Platforms />} />
           <Route path="account" element={<Account />} />
+        </Route>
         </Route>
       </Routes>
     </>

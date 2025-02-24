@@ -1,43 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import logo from '../../public/Newton-School.png';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { IoIosSettings } from "react-icons/io";
+import { Link, useLocation } from 'react-router-dom';
 const Navbar = () => {
+
+    const location = useLocation();
 
     const [menuOpen, setMenuOpen] = useState(false);
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setIsLoggedIn(true);
-        }
-    });
-
-    const handleLogout =async () => {
-
-        const token = localStorage.getItem('token');
-        if (!token) return;
-
-        await axios.post('http://localhost:8080/api/auth/logout',{},
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        );
-        localStorage.removeItem('token');
-        setIsLoggedIn(false);
-        navigate('/login');
-    };
-
-
     const getActiveClass = (path) => {
-        return window.location.pathname === path ? 'bg-zinc-900' : '';
+        return location.pathname === path ? 'bg-zinc-900' : '';
     };
 
     return (
@@ -53,36 +24,7 @@ const Navbar = () => {
                     </svg>
                 </button>
                 <ul className={`md:flex md:space-x-6 ${menuOpen ? 'block' : 'hidden'} w-full md:w-auto`}>
-                    {isLoggedIn ? (
-                        <>
-                            <li className={`hover:bg-zinc-900 rounded transition duration-300 px-4 py-1 flex items-center ${getActiveClass('/dashboard')}`}>
-                                <Link to="/dashboard" className="text-gray-300 md:flex justify-center hover:text-white active:bg-zinc-900">Dashboard</Link>
-                            </li>
-                            <li className={`hover:bg-zinc-900 rounded transition duration-300 px-4 py-1 flex items-center ${getActiveClass('/leaderboard')}`}>
-                                <Link to="/leaderboard" className="text-gray-300 md:flex justify-center hover:text-white active:bg-zinc-900">Leaderboard</Link>
-                            </li>
-                            <li className={`hover:bg-zinc-900 rounded transition duration-300 px-4 py-1 flex items-center ${getActiveClass('/doubts')}`}>
-                                <Link to="/doubts" className="text-gray-300 md:flex justify-center hover:text-white active:bg-zinc-900">Doubts</Link>
-                            </li>
-                            <li className={`hover:bg-zinc-900 rounded transition duration-300 px-4 py-1 flex items-center ${getActiveClass('/material')}`}>
-                                <Link to="/material" className="text-gray-300 md:flex justify-center hover:text-white active:bg-zinc-900">Material</Link>
-                            </li>
-                            
-                            <li className={`hover:bg-zinc-900 rounded transition duration-300 px-4 py-1 flex items-center ${getActiveClass('/settings')}`}>
-                                <Link to="/settings" className="text-gray-300 md:flex justify-center active:bg-zinc-900">
-                                    <IoIosSettings className="h-6 w-6" />
-                                </Link>
-                            </li>
-                            <li className="hover:bg-zinc-900 rounded transition duration-300 md:flex px-3 py-1 justify-center">
-                                <button onClick={handleLogout} className="text-gray-300 hover:text-white active:bg-zinc-900 flex items-center">
-                                    <svg className="h-5 w-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1m0-10V5m0 10v1m0-10V5"></path>
-                                    </svg>
-                                    Logout
-                                </button>
-                            </li>
-                            </>
-                    ) : (
+                    
                         <>
                             <li className={`hover:bg-zinc-900 rounded px-4 py-1 flex items-center transition duration-300 ${getActiveClass('/')}`}>
                                 <Link to="/" className="text-gray-300 md:flex justify-center hover:text-white active:bg-zinc-900">Home</Link>
@@ -94,7 +36,6 @@ const Navbar = () => {
                                 <Link to="/signup" className="text-gray-300 hover:text-white active:bg-zinc-900">SignUp</Link>
                             </li>
                         </>
-                    )}
                 </ul>
             </div>
         </nav>

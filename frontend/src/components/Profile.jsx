@@ -44,7 +44,10 @@ function Profile() {
 
   return (
     <div className="container mx-auto px-4 py-6 max-w-3xl">
-      <h3 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">Profile</h3>
+      <h3 className="text-3xl font-bold text-gray-900 dark:text-white">Profile Settings</h3>
+      <p className={`text-sm text-gray-500 mb-8 dark:text-gray-400`}>
+                Update your Username and Avatar.
+              </p>
       <div className="space-y-4 flex flex-col items-center rounded-lg p-6 bg-gray-100 dark:bg-gray-800">
         <form className="w-full max-w-sm" onSubmit={(e)=>{handleFormSubmit(e)}} >
           <div className="relative w-40 h-40 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto">
@@ -63,12 +66,12 @@ function Profile() {
             onChange={(e) => handleSubmit(e)}
           />
           <div className="mt-6">
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Username:</label>
+            <label htmlFor="username" className="text-sm font-medium leading-none text-gray-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-white">Username:</label>
             <input type="text" id="username" className="mt-1 block w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" value={username} onChange={(e)=> setUsername(e.target.value)
             } />
           </div>
           <div className="mt-4">
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email:</label>
+            <label htmlFor="email" className="text-sm font-medium leading-none text-gray-900 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-white">Email:</label>
             <input type="email" id="email" className="mt-1 block w-full px-3 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none sm:text-sm" disabled value={user.email} />
           </div>
           <div>

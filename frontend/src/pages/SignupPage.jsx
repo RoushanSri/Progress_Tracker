@@ -32,7 +32,7 @@ const SignupPage = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            navigate('/dashboard');
+            navigate('/u/dashboard');
         } catch (error) {
             console.log(error);
         }
@@ -41,7 +41,7 @@ const SignupPage = () => {
     }
 
     return (
-        <div className="flex flex-row-reverse min-h-screen bg-zinc-900">
+        <div className="flex flex-row-reverse bg-zinc-900">
             {/* Left Column - Signup Form */}
             <div className="flex w-full flex-col justify-center bg-zinc-900 md:w-1/2 md:px-12 lg:px-16">
                 <div className="mx-[6vw] w-full max-w-sm">

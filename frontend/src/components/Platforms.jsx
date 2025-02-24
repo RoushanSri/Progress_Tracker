@@ -7,7 +7,10 @@ import { SiGeeksforgeeks } from "react-icons/si";
 function Platforms() {
   return (
     <div className="container mx-auto px-4 py-6 max-w-3xl">
-          <h3 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">Coding Platforms</h3>
+          <h3 className="text-3xl font-bold text-gray-900 dark:text-white">Coding Platforms</h3>
+          <p className={`text-sm text-gray-500 dark:text-gray-400 mb-8`}>
+                Add your Coding Platforms. You'll need to verify them.
+              </p>
           <div className="space-y-4 flex flex-col rounded-lg p-6 bg-gray-100 dark:bg-gray-800">
             <form className="flex items-center space-x-2" onSubmit={(e) => handlePlatform(e, "leetcode")}>
               <SiLeetcode className='text-white' size={'2vw'} />

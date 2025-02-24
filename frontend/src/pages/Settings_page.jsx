@@ -11,25 +11,6 @@ const SettingsPage = () => {
     const savedTheme = localStorage.getItem("theme")
     return savedTheme ? savedTheme === "dark" : false
   })
-  const [username, setUsername] = useState("")
-  const [email, setEmail] = useState("")
-  const [oldPassword, setOldPassword] = useState("")
-  const [newPassword, setNewPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [preferredLanguage, setPreferredLanguage] = useState("")
-  const [codingPlatforms, setCodingPlatforms] = useState([
-    { name: "LeetCode", connected: false, username: "" },
-    { name: "CodeChef", connected: true, username: "" },
-    { name: "Codeforces", connected: false, username: "" },
-    { name: "GitHub", connected: true, username: "" },
-    { name: "GeeksforGeeks", connected: false, username: "" },
-  ])
-  const [socialPlatforms, setSocialPlatforms] = useState([
-    { name: "Facebook", connected: false, username: "" },
-    { name: "Twitter", connected: false, username: "" },
-    { name: "Instagram", connected: false, username: "" },
-    { name: "LinkedIn", connected: false, username: "" },
-  ])
 
   useEffect(() => {
     if (darkMode) {
@@ -41,45 +22,9 @@ const SettingsPage = () => {
     }
   }, [darkMode])
 
-  const togglePlatformConnection = (index, type) => {
-    if (type === "coding") {
-      setCodingPlatforms((prevPlatforms) => {
-        const updatedPlatforms = prevPlatforms.map((platform, i) => 
-          i === index ? { ...platform, connected: !platform.connected } : platform
-        )
-        return updatedPlatforms
-      })
-    } else if (type === "social") {
-      setSocialPlatforms((prevPlatforms) => {
-        const updatedPlatforms = prevPlatforms.map((platform, i) => 
-          i === index ? { ...platform, connected: !platform.connected } : platform
-        )
-        return updatedPlatforms
-      })
-    }
-  }
-
-  const handlePlatformInputChange = (index, field, value, type) => {
-    if (type === "coding") {
-      setCodingPlatforms((prevPlatforms) => {
-        const updatedPlatforms = prevPlatforms.map((platform, i) => 
-          i === index ? { ...platform, [field]: value } : platform
-        )
-        return updatedPlatforms
-      })
-    } else if (type === "social") {
-      setSocialPlatforms((prevPlatforms) => {
-        const updatedPlatforms = prevPlatforms.map((platform, i) => 
-          i === index ? { ...platform, [field]: value } : platform
-        )
-        return updatedPlatforms
-      })
-    }
-  }
-
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-zinc-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
-      <div className="container mx-auto px-[10vw] py-8">
+      <div className="container mx-auto px-[5vw] py-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Settings</h1>
           <button
@@ -93,19 +38,19 @@ const SettingsPage = () => {
           <div className="w-1/4 p-4 bg-gray-200 dark:bg-gray-900 rounded-lg">
             <nav>
               <ul className="space-y-6 px-2 duration-200">
-                <li className={`mb-2 flex items-center rounded-lg p-2 ${location.pathname === '/settings' ? 'bg-gray-800 border-2 border-gray-700' : ''}`}>
+                <li className={`mb-2 flex items-center rounded-lg p-2 ${location.pathname === '/u/settings' ? 'bg-gray-800 border-2 border-gray-700' : ''}`}>
                   <User className="w-5 h-5 mr-2" />
                   <Link to={''} className="text-gray-800 w-full text-xl dark:text-gray-200">Profile</Link>
                 </li>
-                <li className={`mb-2 flex items-center rounded-lg p-2 ${location.pathname === '/settings/socials' ? 'bg-gray-800 border-2 border-gray-700' : ''}`}>
+                <li className={`mb-2 flex items-center rounded-lg p-2 ${location.pathname === '/u/settings/socials' ? 'bg-gray-800 border-2 border-gray-700' : ''}`}>
                   <MessageCircle className="w-5 h-5 mr-2" />
                   <Link to={'socials'} className="text-gray-800 w-full text-xl dark:text-gray-200">Socials</Link>
                 </li>
-                <li className={`mb-2 flex items-center rounded-lg p-2 ${location.pathname === '/settings/platforms' ? 'bg-gray-800 border-2 border-gray-700' : ''}`}>
+                <li className={`mb-2 flex items-center rounded-lg p-2 ${location.pathname === '/u/settings/platforms' ? 'bg-gray-800 border-2 border-gray-700' : ''}`}>
                   <LayoutDashboard className="w-5 h-5 mr-2" />
                   <Link to={'platforms'} className="text-gray-800 w-full text-xl dark:text-gray-200">Platforms</Link>
                 </li>
-                <li className={`mb-2 flex items-center rounded-lg p-2 ${location.pathname === '/settings/account' ? 'bg-gray-800 border-2 border-gray-700' : ''}`}>
+                <li className={`mb-2 flex items-center rounded-lg p-2 ${location.pathname === '/u/settings/account' ? 'bg-gray-800 border-2 border-gray-700' : ''}`}>
                   <Wrench className="w-5 h-5 mr-2" />
                   <Link to={'account'} className="text-gray-800 w-full text-xl dark:text-gray-200">Accounts</Link>
                 </li>
