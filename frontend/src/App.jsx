@@ -33,7 +33,7 @@ function App() {
             </UserProtector>
           }
         >
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="dashboard" element={<Demo />} />
           <Route path="material" element={<Material />} />
           <Route path="doubts" element={<Doubts />} />
           <Route path="leaderboard" element={<Leaderboard />} />

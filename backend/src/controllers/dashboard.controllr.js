@@ -33,6 +33,9 @@ const getDashboard = async (req, res) => {
       leetcode:{
         url:dashboard.leetcode.url,
         solvedProblems:dashboard.leetcode.solvedProblems,
+        easy:dashboard.leetcode.easy,
+        medium:dashboard.leetcode.medium,
+        hard:dashboard.leetcode.hard,
         calendar:dashboard.leetcode.calendar,
         username:dashboard.leetcode.username
       }
@@ -119,6 +122,9 @@ const updateLeetcode = async (req, res) => {
       leetcode: {
         url: "https://leetcode.com/u/"+leetcodeUsername,
         solvedProblems: data.submitStats.acSubmissionNum[0].count,
+        easy: data.submitStats.acSubmissionNum[1].count,
+        medium: data.submitStats.acSubmissionNum[2].count,
+        hard: data.submitStats.acSubmissionNum[3].count,
         calendar: data.submissionCalendar,
         username: leetcodeUsername
       }
@@ -147,6 +153,9 @@ const refreshAll = async (req, res) => {
                   const matchedUser = await data.data.data.matchedUser;
                   item.past5 = await check(getPastFiveDays(), matchedUser.submissionCalendar);                  
                   item.leetcode.solvedProblems = matchedUser.submitStats.acSubmissionNum[0].count;
+                  item.leetcode.easy = matchedUser.submitStats.acSubmissionNum[1].count;
+                  item.leetcode.medium = matchedUser.submitStats.acSubmissionNum[2].count;
+                  item.leetcode.hard = matchedUser.submitStats.acSubmissionNum[3].count;
                   item.leetcode.calendar = matchedUser.submissionCalendar;
                   item.save();
               }})

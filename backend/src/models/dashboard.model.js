@@ -22,6 +22,18 @@ const dashboardSchema = mongoose.Schema({
             type: Number,
             default:-1
         },
+        easy:{
+            type: Number,
+            default:0
+        },
+        medium:{
+            type: Number,
+            default:0
+        },
+        hard:{
+            type: Number,
+            default:0
+        },
         calendar:{
             type: Object,
             default:{}

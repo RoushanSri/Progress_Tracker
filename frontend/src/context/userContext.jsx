@@ -18,6 +18,9 @@ const UserContextProvider = ({children}) => {
         leetcode:{
             url: '',
             solvedProblems: '',
+            easy:'',
+            medium:'',
+            hard:'',
             calendar: '',
             username: ''
         }

@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
 import { userContext } from '../context/userContext';
-import { BarChart3, Calendar, Home, LayoutDashboard, Settings } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { BarChart3, Calendar, Home, LayoutDashboard, Settings, LogOut } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Navigations() {
 
@@ -9,9 +10,26 @@ function Navigations() {
 
     const location = useLocation();
 
+    const navigate = useNavigate();
+
     const getActiveClass = (path) => {
       return location.pathname === path ? 'bg-gray-800 border-2 border-gray-700' : '';
   };
+
+    const handleLogout =async () => {
+      const token = localStorage.getItem('token');
+        if (!token) return;
+
+        await axios.post('http://localhost:8080/api/auth/logout',{},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        localStorage.removeItem('token');
+        navigate('/login');
+    }
 
   return (
     <div>
@@ -59,6 +77,7 @@ function Navigations() {
             <Settings className="h-5 w-5" />
             Settings
           </Link >
+          <button onClick={handleLogout} className="w-full p-2 flex items-center text-[1.2rem] justify-start gap-2 rounded-lg text-red-700 hover:text-red-600"><LogOut/>Logout</button>
         </nav>
       </div>
     </div>
