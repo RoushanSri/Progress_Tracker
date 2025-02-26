@@ -82,7 +82,7 @@ function Dashboard() {
       <div className="flex space-x-7 w-full h-[45vh] mt-5">
         <div className="w-full h-full bg-gray-900 border-2 flex text-white flex-col border-gray-800 rounded-xl p-7">
           <h2 className="text-2xl font-medium">Statistics</h2>
-          <div className="flex space-x-5 gap-2 w-full h-1/3 mt-5 mb-5">
+          <div className="flex space-x-5 gap-2 w-full h-1/3 my-5 mb-10">
             <div className="border w-full flex flex-col justify-center items-center border-gray-700 rounded-lg">
               <h1 className="text-cyan-400 text-3xl font-medium">
                 {data.leetcode.easy}
@@ -102,8 +102,7 @@ function Dashboard() {
               <span className="text-xl">Hard</span>
             </div>
           </div>
-          <div className="flex w-full space-x-12">
-            <div className="w-fit flex flex-col items-center justify-center">
+          <div className="flex w-full items-center space-x-12">
               <div className="text-xl items-center gap-2 font-medium mb-3 flex">
               <h2>Language for DSA</h2>
               <Link to={"/u/settings/platforms"} className="opacity-70 hover:opacity-100 duration-200"><LuPenLine/></Link>
@@ -111,8 +110,28 @@ function Dashboard() {
               <span className="text-2xl w-fit font-medium border border-gray-700 rounded-lg p-3">
                 {data.dsaLanguage}
               </span>
-            </div>
-            <div className="w-fit flex flex-col items-center">
+          </div>
+        </div>
+        <div className="w-full h-full bg-gray-900 border-2 flex flex-col border-gray-800 text-white rounded-xl p-7">
+          <div className="mb-8 h-1/2">
+          <div className="text-2xl flex items-center gap-2 font-medium mb-7">
+          <h2>Skills</h2>
+          <Link to="/u/settings/platforms" className="opacity-70 hover:opacity-100 duration-200"><LuPenLine/></Link>
+          </div>
+          <div className="flex gap-3 w-full h-fit flex-wrap">
+            {data.skills.length!==0?data.skills.map((skill, index) => (
+              <div
+                key={index}
+                className="border block items-center text-wrap justify-center bg-gray-800 border-gray-500 rounded-lg p-1 px-3"
+              >
+                <span>{skill}</span>
+              </div>
+            )):(
+              <p className="text-gray-400">No Skills added yet..</p>
+            )}
+          </div>
+          </div>
+          <div className="w-fit flex flex-col items-center">
               <h2 className="text-xl font-medium mb-3">Platforms</h2>
               <div className="flex">
                 {data.leetcode.url !== "" && (
@@ -127,23 +146,6 @@ function Dashboard() {
                 )}
               </div>
             </div>
-          </div>
-        </div>
-        <div className="w-full h-full bg-gray-900 border-2 flex flex-col border-gray-800 text-white rounded-xl p-7">
-          <div className="text-2xl flex items-center gap-2 font-medium mb-7">
-          <h2>Skills</h2>
-          <Link to="/u/settings/platforms" className="opacity-70 hover:opacity-100 duration-200"><LuPenLine/></Link>
-          </div>
-          <div className="flex gap-3 w-full h-fit flex-wrap">
-            {data.skills.map((skill, index) => (
-              <div
-                key={index}
-                className="border block items-center text-wrap justify-center bg-gray-800 border-gray-500 rounded-lg p-1 px-3"
-              >
-                <span>{skill}</span>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
       {/*Projects Card*/}

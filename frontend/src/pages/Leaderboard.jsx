@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import trophy from "../../public/trophy.png";
+import noimage from "../../public/noImage.webp";
 const Leaderboard = () => {
   
   const [data, setData] = useState([]);
@@ -11,71 +12,124 @@ const Leaderboard = () => {
     }
     getAll();
   },[])
-  const handleSort = (key) => {
-    const sortedData = [...data].sort((a, b) => b[key] - a[key]);
-    setData(sortedData);
-  };
   
   return (
-    <div className="mx-auto p-4 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 min-h-screen flex flex-col items-center">
-      <h1 className="text-4xl font-extrabold mb-8 text-center text-white drop-shadow-lg">
-        Leaderboard
+    <div className="mx-auto p-4 bg-gray-950 min-h-screen flex flex-col items-center">
+      <h1 className="text-4xl font-extrabold my-4 text-center text-white drop-shadow-lg">
+        Leaderboard🚀
       </h1>
-      <button
-        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-full mb-8 shadow-lg transition duration-300 transform hover:scale-105"
-        onClick={() => handleSort("score")}
-      >
-        Sort by Score
-      </button>
-      <div className="w-full max-w-4xl">
-        <table className="min-w-full shadow-md rounded-lg text-white overflow-hidden">
-          <thead className="bg-gray-900">
-            <tr>
-              <th className="py-4 px-6 text-left text-gray-300 font-bold uppercase tracking-wider">
+      <div className="w-full p-12 pt-4">
+        <div className="flex w-full justify-between space-x-8 items-center mb-4">
+          <div className="w-full flex shadow-lg shadow-gray-900 flex-col text-white text-2xl border border-gray-700 rounded-lg p-4">
+          <div className="flex items-center justify-between font-bold">
+          <div className="flex items-center gap-4 font-bold">
+            <div className="w-14 h-14 rounded-full overflow-hidden flex items-center justify-center">
+                  <img src={data?.[0]?.avatar||noimage} alt="avatar" className="w-full h-full object-cover" />
+            </div>
+            <span>{data?.[0]?.name}</span>
+            </div>
+            <div className="w-16 h-16 overflow-hidden flex items-center justify-center">
+              <img src={trophy} alt="" className="w-14 h-14" />
+            </div>
+            </div>
+            <div className="flex w-full items-center mt-4">
+              <div className="w-full flex flex-col items-center">
+                <h1 className="text-gray-500 text-lg font-semibold">Rank</h1>
+                <h1 className="text-white text-2xl font-bold">1</h1>
+              </div>
+              <div className="w-full flex flex-col items-center">
+                <h1 className="text-gray-500 text-lg font-semibold">Total</h1>
+                <h1 className="text-white text-2xl font-bold">{data?.[0]?.score}</h1>
+              </div>
+              <div className="w-full flex flex-col items-center">
+                <h1 className="text-gray-500 text-lg font-semibold">Language</h1>
+                <h1 className="text-white text-2xl font-bold">{data?.[0]?.language}</h1>
+                </div>
+            </div>
+          </div>
+          <div className="w-full shadow-lg shadow-gray-900 text-white text-2xl rounded-lg font-bold border border-gray-700 p-4">
+          <div className="flex items-center justify-between font-bold">
+          <div className="flex items-center gap-4 font-bold">
+            <div className="w-14 h-14 rounded-full overflow-hidden flex items-center justify-center">
+                  <img src={data?.[1]?.avatar||noimage} alt="avatar" className="w-full h-full object-cover" />
+            </div>
+            <span>{data?.[1]?.name}</span>
+            </div>
+            <div className="w-16 h-16 overflow-hidden flex items-center justify-center">
+              <img src={trophy} alt="" className="w-14 h-14" />
+            </div>
+            </div>
+            <div className="flex w-full items-center mt-4">
+              <div className="w-full flex flex-col items-center">
+                <h1 className="text-gray-500 text-lg font-semibold">Rank</h1>
+                <h1 className="text-white text-2xl font-bold">2</h1>
+              </div>
+              <div className="w-full flex flex-col items-center">
+                <h1 className="text-gray-500 text-lg font-semibold">Total</h1>
+                <h1 className="text-white text-2xl font-bold">{data?.[1]?.score}</h1>
+              </div>
+              <div className="w-full flex flex-col items-center">
+                <h1 className="text-gray-500 text-lg font-semibold">Language</h1>
+                <h1 className="text-white text-2xl font-bold">{data?.[1]?.language}</h1>
+                </div>
+            </div>
+          </div>
+          <div className="w-full shadow-lg shadow-gray-900 text-white text-2xl rounded-lg font-bold border border-gray-700 p-4">
+          <div className="flex items-center justify-between font-bold">
+          <div className="flex items-center gap-4 font-bold">
+            <div className="w-14 h-14 rounded-full overflow-hidden flex items-center justify-center">
+                  <img src={data?.[2]?.avatar||noimage} alt="avatar" className="w-full h-full object-cover" />
+            </div>
+            <span>{data?.[2]?.name}</span>
+            </div>
+            <div className="w-16 h-16 overflow-hidden flex items-center justify-center">
+              <img src={trophy} alt="" className="w-14 h-14" />
+            </div>
+            </div>
+            <div className="flex w-full items-center mt-4">
+              <div className="w-full flex flex-col items-center">
+                <h1 className="text-gray-500 text-lg font-semibold">Rank</h1>
+                <h1 className="text-white text-2xl font-bold">3</h1>
+              </div>
+              <div className="w-full flex flex-col items-center">
+                <h1 className="text-gray-500 text-lg font-semibold">Total</h1>
+                <h1 className="text-white text-2xl font-bold">{data?.[2]?.score}</h1>
+              </div>
+              <div className="w-full flex flex-col items-center">
+                <h1 className="text-gray-500 text-lg font-semibold">Language</h1>
+                <h1 className="text-white text-2xl font-bold">{data?.[2]?.language}</h1>
+                </div>
+            </div>
+          </div>
+        </div>
+        <table className="min-w-full shadow-md rounded-lg text-white overflow-hidden mt-12">
+          <thead className="bg-gray-950 border border-gray-800">
+            <tr className="w-full flex">
+              <th className="w-full py-2 px-6 text-left text-gray-300 text-sm font-bold uppercase tracking-wider">
                 Rank
               </th>
-              <th className="py-4 px-6 text-left text-gray-300 font-bold uppercase tracking-wider">
+              <th className=" w-full py-2 px-6 text-left text-gray-300 text-sm font-bold uppercase tracking-wider">
                 Name
               </th>
-              <th className="py-4 px-6 text-left text-gray-300 font-bold uppercase tracking-wider">
+              <th className=" w-full py-2 px-6 text-left text-gray-300 text-sm font-bold uppercase tracking-wider">
                 Language
               </th>
-              <th className="py-4 px-6 text-left text-gray-300 font-bold uppercase tracking-wider">
+              <th className="w-full py-2 px-6 text-left text-gray-300 text-sm font-bold uppercase tracking-wider">
                 Total
               </th>
-              <th className="py-4 px-6 text-left text-gray-300 font-bold uppercase tracking-wider">
+              <th className="w-full py-2 px-6 text-left text-gray-300 text-sm font-bold uppercase tracking-wider">
                 Previous
               </th>
             </tr>
           </thead>
           <tbody>
             {data.map((item, index) => (
+              index>2&&(
               <tr
                 key={item.id}
-                className={`${index % 2 === 0 ? "bg-gray-700" : "bg-gray-600"}`}
+                className={`bg-gray-900 w-full flex border border-gray-700 `}
               >
-                <td className="py-4 px-6">
-                  {index + 1 === 1 && (
-                    <div className="flex items-center">
-                      <div className="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-white font-bold">
-                        1
-                      </div>
-                    </div>
-                  )}
-                  {index + 1 === 2 && (
-                    <div className="flex items-center">
-                      <div className="w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center text-white font-bold">
-                        2
-                      </div>
-                    </div>
-                  )}
-                  {index + 1 === 3 && (
-                    <div className="flex items-center">
-                      <div className="w-8 h-8 bg-orange-400 rounded-full flex items-center justify-center text-white font-bold">
-                        3
-                      </div>
-                    </div>
-                  )}
+                <td className="py-3 px-6 w-full">
                   {index + 1 > 3 && (
                     <div className="flex items-center">
                       <div className="w-8 h-8 bg-transparent rounded-full flex items-center justify-center font-bold">
@@ -84,10 +138,17 @@ const Leaderboard = () => {
                     </div>
                   )}
                 </td>
-                <td className="py-4 px-6 ">{item.name}</td>
-                <td className="py-4 px-6">{item.language}</td>
-                <td className="py-4 px-6">{item.score}</td>
-                <td className="py-4 px-6 flex items-center gap-2">
+                <td className="py-3 px-6 w-full">{
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center">
+                      <img src={item.avatar||noimage} alt="avatar" className="w-full h-full object-cover" />
+                    </div>
+                    <span>{item.name}</span>
+                  </div>
+                }</td>
+                <td className="py-3 px-6 w-full flex items-center">{item.language}</td>
+                <td className="py-3 px-6 w-full flex items-center">{item.score}</td>
+                <td className="py-3 px-6 flex items-center gap-2 w-full">
                   {
                     item.previous.map((day, index) => (
                       <div
@@ -99,7 +160,7 @@ const Leaderboard = () => {
                     ))
                   }
                 </td>
-              </tr>
+              </tr>)
             ))}
           </tbody>
         </table>

@@ -1,6 +1,8 @@
 import { Camera } from "lucide-react";
 import React, { useContext, useState } from "react";
 import { userContext } from "../context/userContext";
+import axios from "axios";
+import noimage from "../../public/noImage.webp";
 
 function Profile() {
   const {user, setUser} = useContext(userContext);
@@ -52,7 +54,7 @@ function Profile() {
         <form className="w-full max-w-sm" onSubmit={(e)=>{handleFormSubmit(e)}} >
           <div className="relative w-40 h-40 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto">
             <div className="w-full h-full flex items-center justify-center rounded-full overflow-hidden text-gray-500 dark:text-gray-400 border-2 border-gray-200">
-              <img src={user.avatar} alt="Profile" className="object-cover w-full h-full" />
+              <img src={user.avatar||noimage} alt="Profile" className="object-cover w-full h-full" />
             </div>
             <label htmlFor="profile-picture">
               <Camera className="absolute bottom-2 right-2 w-10 h-10 bg-gray-700 bg-opacity-60 hover:bg-opacity-80 hover:scale-110 duration-300 rounded-full p-1 cursor-pointer" />

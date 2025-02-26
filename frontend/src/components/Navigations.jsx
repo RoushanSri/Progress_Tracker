@@ -3,6 +3,7 @@ import { userContext } from '../context/userContext';
 import { BarChart3, Calendar, Home, LayoutDashboard, Settings, LogOut } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import noimage from '../../public/noImage.webp';
 
 function Navigations() {
 
@@ -40,7 +41,7 @@ function Navigations() {
 
         <div className="flex flex-col items-center p-6 text-center">
           <div className="h-28 w-28 rounded-full overflow-hidden">
-            <img src={user.avatar} alt="Sarah Connor" />
+            <img src={user.avatar||noimage} alt="Sarah Connor" />
           </div>
           <h3 className="mt-4 font-medium text-lg text-white">{user.username}</h3>
           <p className="text-md text-gray-400">{user.email}</p>

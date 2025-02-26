@@ -170,8 +170,12 @@ const getAll= async (req, res) => {
     const collection= await Dashboard.find({}).populate('user');
     const ds=collection.map((item, key) => {
       
-      return { name: item.user.username, score: item.leetcode.solvedProblems, language: item.languageForDsa, previous: item.past5 };
+      return { user:item.user, name: item.user.username, avatar: item.user.avatar, score: item.leetcode.solvedProblems, language: item.languageForDsa, previous: item.past5 };
     })
+    ds.sort((a, b) => b.score - a.score);
+    ds.map(async(item, key) => {
+      await Dashboard.findOneAndUpdate({ user: item.user }, { rank: key + 1 });
+    });
     res.status(200).json(ds);
   } catch (error) {
     console.log(error);
