@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import UserProtector from "./components/UserProtector";
-import Dashboard from "./pages/Dashboard";
 import Leaderboard from "./pages/Leaderboard";
 import Doubts from "./pages/Doubts";
 import SettingsPage from "./pages/Settings_page";
@@ -14,7 +13,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import MainLayout from "./pages/MainLayout";
-import Demo from "./pages/Demo";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -33,7 +32,7 @@ function App() {
             </UserProtector>
           }
         >
-          <Route path="dashboard" element={<Demo />} />
+          <Route path="dashboard" element={<Dashboard />} />
           <Route path="material" element={<Material />} />
           <Route path="doubts" element={<Doubts />} />
           <Route path="leaderboard" element={<Leaderboard />} />

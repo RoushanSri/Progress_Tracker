@@ -62,10 +62,10 @@ const addSkill = async (req, res) => {
 };
 
 const editLanguage = async (req, res) => {
-  const { editedLang } = req.body;
+  const { language } = req.body;
   try {
     const dashboard = await Dashboard.findOneAndUpdate({ user: req.user._id },{
-      languageForDsa: editedLang,
+      languageForDsa: language,
     },{
       new: true
     });
