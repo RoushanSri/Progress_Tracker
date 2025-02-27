@@ -182,4 +182,19 @@ const getAll= async (req, res) => {
   }
 }
 
-export { getDashboard, createDashboard, addSkill, editLanguage, getLeetcode, updateLeetcode, refreshAll, getAll};
+const deleteSkill = async(req, res) => {
+  try {
+    const dashboard = await Dashboard.findOneAndUpdate({ user: req.user._id },{
+      $pull: { skills: req.body.skill }
+    },
+    { new: true });
+    
+    if (!dashboard) return res.status(404).json({ msg: "Dashboard not found" });
+
+    res.status(200).json(dashboard);
+    } catch (err) {
+    res.status(500).json({ msg: "Server error" });
+    }
+}
+
+export { getDashboard, createDashboard, addSkill, editLanguage, getLeetcode, updateLeetcode, refreshAll, getAll, deleteSkill};

@@ -105,7 +105,7 @@ function Dashboard() {
           <div className="flex w-full items-center space-x-12">
               <div className="text-xl items-center gap-2 font-medium mb-3 flex">
               <h2>Language for DSA</h2>
-              <Link to={"/u/settings/platforms"} className="opacity-70 hover:opacity-100 duration-200"><LuPenLine/></Link>
+              <Link to={"/u/settings"} className="opacity-70 hover:opacity-100 duration-200"><LuPenLine/></Link>
               </div>
               <span className="text-2xl w-fit font-medium border border-gray-700 rounded-lg p-3">
                 {data.dsaLanguage}
@@ -116,7 +116,7 @@ function Dashboard() {
           <div className="mb-8 h-1/2">
           <div className="text-2xl flex items-center gap-2 font-medium mb-7">
           <h2>Skills</h2>
-          <Link to="/u/settings/platforms" className="opacity-70 hover:opacity-100 duration-200"><LuPenLine/></Link>
+          <Link to="/u/settings" className="opacity-70 hover:opacity-100 duration-200"><LuPenLine/></Link>
           </div>
           <div className="flex gap-3 w-full h-fit flex-wrap">
             {data.skills.length!==0?data.skills.map((skill, index) => (

@@ -5,7 +5,6 @@ import { SiLeetcode } from "react-icons/si";
 import { SiGeeksforgeeks } from "react-icons/si";
 import { userContext } from "../context/userContext";
 import axios from "axios";
-import { LuPenLine } from "react-icons/lu";
 
 function Platforms() {
   const { data } = useContext(userContext);
@@ -16,8 +15,6 @@ function Platforms() {
   const [leetcodeUsername, setLeetcodeUsername] = useState(
     data.leetcode.username
   );
-  const [language, setLanguage] = useState(data.dsaLanguage);
-  const [skill, setSkill] = useState("");
 
   const handlePlatform = async (platform) => {
     if (platform === "Leetcode") {
@@ -55,43 +52,6 @@ function Platforms() {
     } else if (platform === "hackerrank") {
     }
   };
-
-  const editLang = async () => {
-    try {      
-        await axios.post(
-        "http://localhost:8080/api/dashboard/editLanguage",
-        {
-          language,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-      
-    }
-  };
-
-  const addSkill = async () => {
-    try {
-      await axios.post(
-        "http://localhost:8080/api/dashboard/addSkill",
-        {
-          skill: skill,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   return (
     <div className="container mx-auto px-4 py-6 max-w-3xl">
@@ -185,40 +145,6 @@ function Platforms() {
           </button>
         </div>
       </div>
-      <h3 className="text-3xl font-bold text-gray-900 dark:text-white">
-        Add Language for DSA And Skills
-      </h3>
-      <p className={`text-sm text-gray-500 dark:text-gray-400 mb-8`}>
-        Add your Language for DSA and Skills.
-      </p>
-      <div className="bg-gray-800 flex flex-col space-y-5 rounded-lg p-5">
-      <div className="flex items-center space-x-3">
-        <LuPenLine className="text-xl"/>
-        <label htmlFor="dsa" className="text-xl font-medium">Language</label>
-        <input
-          type="text"
-          id="dsa"
-          value={language}
-          placeholder="Edit Language.."
-          className="flex h-10 w-1/3 rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-400 dark:focus:ring-gray-500"
-          onChange={(e) => setLanguage(e.target.value)}
-        />
-        <button onClick={()=>editLang()} className="w-full inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 bg-gray-900 text-white hover:bg-gray-800 dark:bg-blue-700 dark:hover:bg-blue-800 h-10 px-4 py-2 sm:w-auto">Done</button>
-      </div>
-      <div className="flex items-center space-x-3">
-      <LuPenLine className="text-xl"/>
-        <label htmlFor="skill" className="text-xl font-medium">Add Skill</label>
-        <input
-          type="text"
-          id="skill"
-          value={skill}
-          placeholder="Add Skill.."
-          className="flex h-10 w-1/3 rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-400 dark:focus:ring-gray-500"
-          onChange={(e) => setSkill(e.target.value)}
-        />
-        <button onClick={()=>addSkill()} className="w-full inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 bg-gray-900 text-white hover:bg-gray-800 dark:bg-blue-700 dark:hover:bg-blue-800 h-10 px-4 py-2 sm:w-auto">Add</button>
-      </div>
-    </div>
     </div>
   );
 }
