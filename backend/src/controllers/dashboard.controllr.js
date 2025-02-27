@@ -46,6 +46,36 @@ const getDashboard = async (req, res) => {
   }
 };
 
+const getTargetUser = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const dashboard = await Dashboard.findOne({ user: id }).populate("user");
+    if (!dashboard) return res.status(404).json({ msg: "User not found" });
+    const data={
+      avatar: dashboard.user.avatar,
+      name: dashboard.user.username,
+      email: dashboard.user.email,
+      dsaLanguage:dashboard.languageForDsa,
+      rank:dashboard.rank===0?"N/A":dashboard.rank,
+      skills:dashboard.skills,
+      projects:dashboard.projects,
+      past5:dashboard.past5,
+      leetcode:{
+        url:dashboard.leetcode.url,
+        solvedProblems:dashboard.leetcode.solvedProblems,
+        easy:dashboard.leetcode.easy,
+        medium:dashboard.leetcode.medium,
+        hard:dashboard.leetcode.hard,
+        calendar:dashboard.leetcode.calendar,
+        username:dashboard.leetcode.username
+      }
+    }
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ msg: "Server error" });
+  }
+}
+
 const addSkill = async (req, res) => {
   try {
     const dashboard = await Dashboard.findOneAndUpdate({ user: req.user._id },{
@@ -197,4 +227,4 @@ const deleteSkill = async(req, res) => {
     }
 }
 
-export { getDashboard, createDashboard, addSkill, editLanguage, getLeetcode, updateLeetcode, refreshAll, getAll, deleteSkill};
+export { getDashboard, createDashboard, addSkill, editLanguage, getLeetcode, updateLeetcode, refreshAll, getAll, deleteSkill, getTargetUser };

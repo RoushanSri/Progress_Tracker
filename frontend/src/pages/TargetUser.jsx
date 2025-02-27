@@ -1,28 +1,37 @@
-import React, { useContext, useEffect, useState } from "react";
-import { userContext } from "../context/userContext";
-import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
-import { SiLeetcode } from "react-icons/si";
-import { LuPenLine } from "react-icons/lu";
-import {Link} from "react-router-dom";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { SiLeetcode } from 'react-icons/si';
+import { useParams } from 'react-router-dom';
+import noimage from '../../public/noImage.webp';
 
-function Dashboard() {
-  
-  const { user, data } = useContext(userContext);
-  const [date, setDate] = useState("");
+function TargetUser() {
 
-  useEffect(() => {
-    const date = new Date();
-    setDate(date.toUTCString());
-  });
+    const { id } = useParams();
+
+    const [data, setData] = useState();
+    useEffect(() =>{
+      const fetchData=async()=>{
+        try {
+          const res=await axios.get(`http://localhost:8080/api/dashboard/getDashboard/${id}`)
+          setData(res.data);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      fetchData();
+    },[]);
 
   return (
     <div className="flex-1 p-8 min-h-screen bg-gray-950">
-      <div className="mb-14 flex items-center justify-between">
+      <div className="mb-10 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-semibold text-white">
-            Hello, {user.username}
+          <h1 className="text-3xl font-semibold text-white flex gap-3 items-center">
+            <div className='w-12 h-12 rounded-full overflow-hidden'>
+            <img src={data?.avatar||noimage} alt="" className='object-fit' /> 
+            </div>
+            {data?.name}
           </h1>
-          <p className="text-sm text-gray-400">Today is {date}</p>
         </div>
         <div className="flex space-x-5">
           <span>
@@ -47,9 +56,9 @@ function Dashboard() {
             <p className="text-gray-400">Number of questions Solved🚀 </p>
           </div>
           <span className="text-4xl font-bold">
-            {data.leetcode.solvedProblems === -1
+            {data?.leetcode.solvedProblems === -1
               ? "N/A"
-              : data.leetcode.solvedProblems}
+              : data?.leetcode.solvedProblems}
           </span>
         </div>
         <div className="bg-cyan-900 text-white flex items-center justify-around w-full h-full rounded-xl">
@@ -58,7 +67,7 @@ function Dashboard() {
             <p className="text-gray-400">Overall Leaderboard Ranking👑 </p>
           </div>
           <span className="text-4xl font-bold">
-            {data.rank === -1 ? "N/A" : data.rank}
+            {data?.rank === -1 ? "N/A" : data?.rank}
           </span>
         </div>
         <div className="bg-purple-900 text-white flex items-center justify-around w-full h-full rounded-xl">
@@ -67,7 +76,7 @@ function Dashboard() {
             <p className="text-gray-400">Consistency heat map🔥</p>
           </div>
           <span className="text-3xl font-bold flex gap-1">
-            {data.past5.map((day, index) => (
+            {data?.past5.map((day, index) => (
               <div
                 key={index}
                 className={`${
@@ -85,19 +94,19 @@ function Dashboard() {
           <div className="flex space-x-5 gap-2 w-full h-1/3 my-5 mb-10">
             <div className="border w-full flex flex-col justify-center items-center border-gray-700 rounded-lg">
               <h1 className="text-cyan-400 text-3xl font-medium">
-                {data.leetcode.easy}
+                {data?.leetcode.easy}
               </h1>
               <span className="text-xl">Easy</span>
             </div>
             <div className="border w-full flex flex-col justify-center items-center border-gray-700 rounded-lg">
               <h1 className="text-3xl text-orange-400 font-medium">
-                {data.leetcode.medium}
+                {data?.leetcode.medium}
               </h1>
               <span className="text-xl">Medium</span>
             </div>
             <div className="border w-full flex flex-col justify-center items-center border-gray-700 rounded-lg">
               <h1 className="text-3xl text-red-700 font-medium">
-                {data.leetcode.hard}
+                {data?.leetcode.hard}
               </h1>
               <span className="text-xl">Hard</span>
             </div>
@@ -105,10 +114,9 @@ function Dashboard() {
           <div className="flex w-full items-center space-x-12">
               <div className="text-xl items-center gap-2 font-medium mb-3 flex">
               <h2>Language for DSA</h2>
-              <Link to={"/u/settings"} className="opacity-70 hover:opacity-100 duration-200"><LuPenLine/></Link>
               </div>
               <span className="text-2xl w-fit font-medium border border-gray-700 rounded-lg p-3">
-                {data.dsaLanguage}
+                {data?.dsaLanguage}
               </span>
           </div>
         </div>
@@ -116,10 +124,9 @@ function Dashboard() {
           <div className="mb-8 h-1/2">
           <div className="text-2xl flex items-center gap-2 font-medium mb-7">
           <h2>Skills</h2>
-          <Link to="/u/settings" className="opacity-70 hover:opacity-100 duration-200"><LuPenLine/></Link>
           </div>
           <div className="flex gap-3 w-full h-fit flex-wrap">
-            {data.skills.length!==0?data.skills.map((skill, index) => (
+            {data?.skills.length!==0?data?.skills.map((skill, index) => (
               <div
                 key={index}
                 className="border block items-center text-wrap justify-center bg-gray-800 border-gray-500 rounded-lg p-1 px-3"
@@ -134,9 +141,9 @@ function Dashboard() {
           <div className="w-fit flex flex-col items-center">
               <h2 className="text-xl font-medium mb-3">Platforms</h2>
               <div className="flex">
-                {data.leetcode.url !== "" && (
+                {data?.leetcode.url !== "" && (
                   <a
-                    href={data.leetcode.url}
+                    href={data?.leetcode.url}
                     className="text-2xl w-fit font-medium border border-gray-700 rounded-lg p-3"
                   >
                     <span>
@@ -153,10 +160,10 @@ function Dashboard() {
         <div className="w-full h-full bg-gray-900 border-2 p-4 px-6 border-gray-800 rounded-xl">
           <h2 className="text-white font-medium text-2xl">Projects</h2>
           <div className="flex justify-center">
-            {data.projects.length == 0 ? (
+            {data?.projects.length == 0 ? (
               <p className="text-gray-400">Currently No Projects are added..</p>
             ) : (
-              data.projects.map((project, index) => (
+              data?.projects.map((project, index) => (
                 <div key={index} className="flex items-center gap-2">
                   <p className="text-white">{project.name}</p>
                 </div>
@@ -166,7 +173,7 @@ function Dashboard() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Dashboard;
+export default TargetUser

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import trophy from "../../public/trophy.png";
 import noimage from "../../public/noImage.webp";
+import { Link } from "react-router-dom";
 const Leaderboard = () => {
   
   const [data, setData] = useState([]);
@@ -25,12 +26,12 @@ const Leaderboard = () => {
               index<3&&(
               <div className="w-full flex shadow-lg shadow-gray-900 flex-col text-white text-2xl border border-gray-700 rounded-lg p-4">
           <div className="flex items-center justify-between font-bold">
-          <div className="flex items-center gap-4 font-bold">
+          <Link to={`/u/dashboard/${item.user._id}`} className="flex items-center gap-4 font-bold">
             <div className="w-14 h-14 rounded-full overflow-hidden flex items-center justify-center">
                   <img src={item?.avatar||noimage} alt="avatar" className="w-full h-full object-cover" />
             </div>
-            <span>{item?.name}</span>
-            </div>
+            <span className="w-[8.5vw] overflow-hidden text-nowrap">{item?.name}</span>
+            </Link>
             <div className="w-16 h-16 overflow-hidden flex items-center justify-center">
               <img src={trophy} alt="" className="w-14 h-14" />
             </div>
@@ -75,26 +76,25 @@ const Leaderboard = () => {
           </thead>
           <tbody>
             {data.map((item, index) => (
-              index>2&&(
               <tr
                 key={item.id}
                 className={`bg-gray-900 w-full flex border border-gray-700 `}
               >
                 <td className="py-3 px-6 w-full">
-                  {index + 1 > 3 && (
+                  {
                     <div className="flex items-center">
                       <div className="w-8 h-8 bg-transparent rounded-full flex items-center justify-center font-bold">
                         {index + 1}
                       </div>
                     </div>
-                  )}
+                  }
                 </td>
                 <td className="py-3 px-6 w-full">{
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center">
                       <img src={item.avatar||noimage} alt="avatar" className="w-full h-full object-cover" />
                     </div>
-                    <span>{item.name}</span>
+                    <Link to={`/u/dashboard/${item.user._id}`} className="text-nowrap w-[8.5vw] overflow-hidden">{item.name}</Link>
                   </div>
                 }</td>
                 <td className="py-3 px-6 w-full flex items-center">{item.language}</td>
@@ -112,7 +112,7 @@ const Leaderboard = () => {
                   }
                 </td>
               </tr>)
-            ))}
+            )}
           </tbody>
         </table>
       </div>
