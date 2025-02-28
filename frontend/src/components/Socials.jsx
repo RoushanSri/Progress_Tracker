@@ -73,7 +73,7 @@ function Socials() {
     <div className="container mx-auto px-4 py-6 max-w-3xl">
       <h3 className="text-3xl font-bold text-gray-900 dark:text-white">Social Media Platforms</h3>
       <p className={`text-sm text-gray-500 mb-8 dark:text-gray-400`}>
-                Add your Coding Platforms. You'll need to verify them.
+                Add your Social Media handles. You'll need to verify them.
               </p>
       <div className="space-y-4 flex flex-col rounded-lg p-6 bg-gray-100 dark:bg-gray-800">
         <form className="flex items-center space-x-2" onSubmit={(e) => handlePlatform(e, "facebook")}>

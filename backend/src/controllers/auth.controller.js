@@ -95,4 +95,23 @@ const updateUsername= async(req, res)=>{
     }
 }
 
-export {signUp, logIn, logOut, getUserProfile, updateAvatar, updateUsername};
+const updatePassword= async(req, res)=>{
+    const {oldPassword, newPassword} = req.body;
+
+    try {
+        const user = await User.findById(req.user._id);
+        
+        if(!user||!(await user.matchPassword(oldPassword))){
+            return res.status(400).json({msg: 'Invalid current password'});
+        }
+        
+        user.password = newPassword;
+        await user.save();
+        res.status(200).json({msg: 'Password updated successfully'});
+        
+    } catch (error) {
+        res.status(500).json({msg: 'Server error'});
+    }
+}
+
+export {signUp, logIn, logOut, getUserProfile, updateAvatar, updateUsername, updatePassword};

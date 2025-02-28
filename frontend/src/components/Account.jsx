@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { userContext } from "../context/userContext";
+import axios from "axios";
 
 function Account() {
   const { user, setUser } = useContext(userContext);
@@ -11,12 +12,27 @@ function Account() {
 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
-    if (newPassword !== confirmPassword) {
-      alert("New password and confirm password do not match");
+    if(!oldPassword || !newPassword || !confirmPassword){
+      alert("All fields are required");
       return;
     }
-    // Update password in database here
-  };
+
+    if(newPassword !== confirmPassword){
+      alert("New Passwords do not match confirm password");
+      return;
+    }
+    try{
+      const res = await axios.post("http://localhost:8080/api/auth/password", {oldPassword, newPassword}, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        }
+      });
+      alert(res.data.msg);
+    }catch(err){
+      console.error(err);
+      alert(err.response.data.msg);
+    }
+}
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
