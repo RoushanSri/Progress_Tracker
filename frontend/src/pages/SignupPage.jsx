@@ -23,7 +23,7 @@ const SignupPage = () => {
             const user = await axios.post('http://localhost:8080/api/auth/signup', userData);
             localStorage.setItem("token", user.data.token);
         } catch (error) {
-            console.log(error);
+            alert(error.response.data.message);
         }
         try {
             const token = localStorage.getItem("token");
@@ -88,7 +88,7 @@ const SignupPage = () => {
 
                         <button
                             type="submit"
-                            className="w-full rounded-md bg-[#155E95] py-2 text-white transition-colors hover:bg-[#155E95]"
+                            className="w-full rounded-md bg-[#155E95] py-2 text-white transition-colors hover:bg-[#155E95]/90"
                         >
                             Sign Up
                         </button>

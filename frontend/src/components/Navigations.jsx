@@ -4,6 +4,7 @@ import { BarChart3, Calendar, Home, LayoutDashboard, Settings, LogOut } from 'lu
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import noimage from '../../public/noImage.webp';
+import nscc from '../../public/Newton-School.png';
 
 function Navigations() {
 
@@ -35,8 +36,8 @@ function Navigations() {
   return (
     <div>
         <div className="flex w-64 flex-col border-r min-h-screen h-full border-gray-800 bg-gray-900">
-        <div className="flex h-14 items-center border-b border-gray-800 px-4">
-          <span className="font-semibold text-white">📊 Progress Tracker</span>
+        <div className="flex h-14 gap-4 items-center border-b border-gray-800 px-4">
+        <img src={nscc} alt="nscc" className='w-6 h-6'/><span className="font-semibold text-white"> Progress Tracker</span>
         </div>
 
         <div className="flex flex-col items-center p-6 text-center">
