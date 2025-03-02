@@ -19,7 +19,9 @@ const LoginPage = () => {
             password,
         }
         try {
-            const user = await axios.post('http://localhost:8080/api/auth/login', userData);
+            const user = await axios.post('http://localhost:8080/api/auth/login', userData,{
+                withCredentials: true,
+            });
             localStorage.setItem("token", user.data.token);
             navigate('/u/dashboard');
             await axios.post('http://localhost:8080/api/dashboard/refresh',
