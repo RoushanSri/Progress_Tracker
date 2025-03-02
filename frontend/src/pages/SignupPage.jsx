@@ -10,7 +10,7 @@ const SignupPage = () => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false); // Added state for showPassword
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -41,12 +41,12 @@ const SignupPage = () => {
     }
 
     return (
-        <div className="flex flex-row-reverse bg-zinc-900">
+        <div className="flex flex-col min-h-screen bg-zinc-900 md:flex-row-reverse">
             {/* Left Column - Signup Form */}
-            <div className="flex w-full flex-col justify-center bg-zinc-900 md:w-1/2 md:px-12 lg:px-16">
-                <div className="mx-[6vw] w-full max-w-sm">
-                    <h1 className="mb-2 text-[3vw] font-semibold text-white">Sign Up</h1>
-                    <p className="mb-8 text-sm text-zinc-400">Enter your account details</p>
+            <div className="w-full flex flex-col justify-center h-[100vh] items-center px-4 py-8 md:w-1/2 md:px-6 lg:px-16">
+                <div className="w-full max-w-sm mx-auto">
+                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white mb-2">Sign Up</h1>
+                    <p className="text-sm text-zinc-400 mb-8">Enter your account details</p>
 
                     <form className="space-y-4" onSubmit={handleSubmit}>
                         <div>
@@ -95,7 +95,7 @@ const SignupPage = () => {
                     </form>
 
                     <div className="mt-8 text-center text-sm text-zinc-400">
-                        Already have an account? 
+                        Already have an account?{" "}
                         <Link to="/login" className="text-[#155E95] hover:underline">
                             Login
                         </Link>
@@ -104,17 +104,18 @@ const SignupPage = () => {
             </div>
 
             {/* Right Column - Welcome Banner */}
-            <div className="flex justify-end md:flex md:w-1/2 py-[3vw]">
-                <div className="flex flex-col bg-[#155E95] rounded-lg items-center py-6 px-16 text-center">
-                    <h2 className="mb-2 text-6xl font-bold text-white">
+            <div className="w-full flex justify-end items-center p-4 md:w-1/2 md:p-6 lg:p-8">
+                <div className="bg-[#155E95] rounded-lg text-center p-6 w-full max-w-lg">
+                    <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold text-white mb-2">
                         Welcome to
                         <br />
                         Student Portal
                     </h2>
-                    <p className="mb-8 text-purple-200">Sign up to create your account</p>
+                    <p className="text-purple-200 mb-4 md:mb-8">Sign up to create your account</p>
                     <img
                         src={logo}
-                        className="max-w-lg"
+                        alt="Student Portal Logo"
+                        className="max-w-full h-auto mx-auto"
                     />
                 </div>
             </div>

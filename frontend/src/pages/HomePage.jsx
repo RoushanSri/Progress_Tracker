@@ -6,7 +6,7 @@ const HomePage = () => {
     const navigate = useNavigate();
 
     return (
-        <main className="bg-black text-white">
+        <main className="bg-black px-5 text-white">
           {/* Hero Section */}
           <div
             className="relative min-h-screen flex items-center justify-center"
