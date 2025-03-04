@@ -15,25 +15,25 @@ const signUp=async(req, res)=>{
         if(existingUser){
             return res.status(404).json({msg: 'User already exists'});
         }     
-        try {
-            const response = await axios.get(
-                `${process.env.ABSTRACT_API}${email}`
-            );
+        // try {
+        //     const response = await axios.get(
+        //         `${process.env.ABSTRACT_API}${email}`
+        //     );
             
-            const { is_valid_format, deliverability } = response.data;
+        //     const { is_valid_format, deliverability } = response.data;
             
-            if (!is_valid_format.value) {
-                return res.status(400).json({ exists: false, message: "Invalid email format." });
-            }
+        //     if (!is_valid_format.value) {
+        //         return res.status(400).json({ exists: false, message: "Invalid email format." });
+        //     }
             
-            if (deliverability === "UNDELIVERABLE") {
-                return res.status(404).json({ exists: false, message: "Email does not exist or is unreachable." });
-            }
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json({ exists: false, message: "Email verification failed." });
+        //     if (deliverability === "UNDELIVERABLE") {
+        //         return res.status(404).json({ exists: false, message: "Email does not exist or is unreachable." });
+        //     }
+        // } catch (error) {
+        //     console.log(error);
+        //     return res.status(500).json({ exists: false, message: "Email verification failed." });
             
-        }
+        // }
         const user = await User.create({username, email, password});
     
         const token = await user.generateToken();

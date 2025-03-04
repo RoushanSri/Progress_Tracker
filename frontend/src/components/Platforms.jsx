@@ -1,8 +1,6 @@
 import React, { useContext, useState } from "react";
-import { SiCodechef } from "react-icons/si";
+import { SiCodechef, SiLeetcode, SiGeeksforgeeks } from "react-icons/si";
 import { FaHackerrank } from "react-icons/fa";
-import { SiLeetcode } from "react-icons/si";
-import { SiGeeksforgeeks } from "react-icons/si";
 import { userContext } from "../context/userContext";
 import axios from "axios";
 
@@ -62,11 +60,13 @@ function Platforms() {
         Add your Coding Platforms. You'll need to verify them.
       </p>
       <div className="space-y-4 flex flex-col rounded-lg p-6 bg-gray-100 dark:bg-gray-800 mb-7">
-        <div className="flex items-center space-x-2">
-          <SiLeetcode className="text-white" size={"2vw"} />
-          <label htmlFor="leetcode" className="w-[7rem]">
-            Leetcode
-          </label>
+        <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:items-center sm:space-x-4">
+          <div className="flex items-center space-x-2">
+            <SiLeetcode className="text-white" size={"1.5rem"} />
+            <label htmlFor="leetcode" className="w-[7rem]">
+              Leetcode
+            </label>
+          </div>
           <input
             type="text"
             id="leetcode"
@@ -78,16 +78,18 @@ function Platforms() {
           <button
             type="submit"
             onClick={() => handlePlatform("Leetcode")}
-            className="w-full inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 bg-gray-900 text-white hover:bg-gray-800 dark:bg-blue-700 dark:hover:bg-blue-800 h-10 px-4 py-2 sm:w-auto"
+            className="w-full sm:w-auto inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 bg-gray-900 text-white hover:bg-gray-800 dark:bg-blue-700 dark:hover:bg-blue-800 h-10 px-4 py-2"
           >
             Submit
           </button>
         </div>
-        <div className="flex items-center space-x-2">
-          <SiGeeksforgeeks className="text-white" size={"2vw"} />
-          <label htmlFor="gfg" className="w-[7rem]">
-            GFG
-          </label>
+        <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:items-center sm:space-x-4">
+          <div className="flex items-center space-x-2">
+            <SiGeeksforgeeks className="text-white" size={"1.5rem"} />
+            <label htmlFor="gfg" className="w-[7rem]">
+              GFG
+            </label>
+          </div>
           <input
             type="text"
             id="gfg"
@@ -99,16 +101,18 @@ function Platforms() {
           <button
             type="submit"
             onClick={() => handlePlatform("gfg")}
-            className="w-full inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 bg-gray-900 text-white hover:bg-gray-800 dark:bg-blue-700 dark:hover:bg-blue-800 h-10 px-4 py-2 sm:w-auto"
+            className="w-full sm:w-auto inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 bg-gray-900 text-white hover:bg-gray-800 dark:bg-blue-700 dark:hover:bg-blue-800 h-10 px-4 py-2"
           >
             Submit
           </button>
         </div>
-        <div className="flex items-center space-x-2">
-          <FaHackerrank className="text-white" size={"2vw"} />
-          <label htmlFor="hackerank" className="w-[7rem]">
-            Hackerank
-          </label>
+        <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:items-center sm:space-x-4">
+          <div className="flex items-center space-x-2">
+            <FaHackerrank className="text-white" size={"1.5rem"} />
+            <label htmlFor="hackerank" className="w-[7rem]">
+              Hackerank
+            </label>
+          </div>
           <input
             type="text"
             placeholder="Hackerank Username"
@@ -119,16 +123,18 @@ function Platforms() {
           <button
             type="submit"
             onClick={() => handlePlatform("hackerank")}
-            className="w-full inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 bg-gray-900 text-white hover:bg-gray-800 dark:bg-blue-700 dark:hover:bg-blue-800 h-10 px-4 py-2 sm:w-auto"
+            className="w-full sm:w-auto inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 bg-gray-900 text-white hover:bg-gray-800 dark:bg-blue-700 dark:hover:bg-blue-800 h-10 px-4 py-2"
           >
             Submit
           </button>
         </div>
-        <div className="flex items-center space-x-2">
-          <SiCodechef className="text-white" size={"2vw"} />
-          <label htmlFor="code chef" className="w-[7rem]">
-            Code chef
-          </label>
+        <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:items-center sm:space-x-4">
+          <div className="flex items-center space-x-2">
+            <SiCodechef className="text-white" size={"1.5rem"} />
+            <label htmlFor="code chef" className="w-[7rem]">
+              Code chef
+            </label>
+          </div>
           <input
             type="text"
             placeholder="Code chef Username"
@@ -139,7 +145,7 @@ function Platforms() {
           <button
             type="submit"
             onClick={() => handlePlatform("codechef")}
-            className="w-full inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 bg-gray-900 text-white hover:bg-gray-800 dark:bg-blue-700 dark:hover:bg-blue-800 h-10 px-4 py-2 sm:w-auto"
+            className="w-full sm:w-auto inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 bg-gray-900 text-white hover:bg-gray-800 dark:bg-blue-700 dark:hover:bg-blue-800 h-10 px-4 py-2"
           >
             Submit
           </button>

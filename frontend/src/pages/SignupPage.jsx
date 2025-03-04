@@ -34,7 +34,7 @@ const SignupPage = () => {
             });
             navigate('/u/dashboard');
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
         }
         setEmail("");
         setPassword("");

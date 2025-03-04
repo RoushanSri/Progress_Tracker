@@ -5,7 +5,6 @@ import axios from "axios";
 import noimage from "../../public/noImage.webp";
 import { FaPlus } from "react-icons/fa";
 
-
 function Profile() {
   const { user, setUser, data, setData } = useContext(userContext);
 
@@ -35,6 +34,7 @@ function Profile() {
       }
     };
   };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const username = e.target[1].value;
@@ -128,7 +128,7 @@ function Profile() {
             handleFormSubmit(e);
           }}
         >
-          <div className="relative w-40 h-40 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto">
+          <div className="relative w-32 h-32 sm:w-40 sm:h-40 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto">
             <div className="w-full h-full flex items-center justify-center rounded-full overflow-hidden text-gray-500 dark:text-gray-400 border-2 border-gray-200">
               <img
                 src={user.avatar || noimage}
@@ -137,7 +137,7 @@ function Profile() {
               />
             </div>
             <label htmlFor="profile-picture">
-              <Camera className="absolute bottom-2 right-2 w-10 h-10 bg-gray-700 bg-opacity-60 hover:bg-opacity-80 hover:scale-110 duration-300 rounded-full p-1 cursor-pointer" />
+              <Camera className="absolute bottom-2 right-2 w-8 h-8 sm:w-10 sm:h-10 bg-gray-700 bg-opacity-60 hover:bg-opacity-80 hover:scale-110 duration-300 rounded-full p-1 cursor-pointer" />
             </label>
           </div>
           <input
@@ -194,7 +194,7 @@ function Profile() {
         <p className={`text-sm text-gray-500 dark:text-gray-400 mb-8`}>
           Add your Language for DSA.
         </p>
-        <div className="flex bg-gray-800 items-center space-x-3 rounded-lg p-5">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 bg-gray-800 rounded-lg p-5 space-y-4 sm:space-y-0">
           <LucidePenLine className="text-xl" />
           <label htmlFor="dsa" className="text-xl font-medium">
             Language
@@ -204,12 +204,12 @@ function Profile() {
             id="dsa"
             value={language}
             placeholder="Edit Language.."
-            className="flex h-10 w-1/3 rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-400 dark:focus:ring-gray-500"
+            className="flex h-10 w-full sm:w-1/3 rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-400 dark:focus:ring-gray-500"
             onChange={(e) => setLanguage(e.target.value)}
           />
           <button
             onClick={() => editLang()}
-            className="w-full inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 bg-gray-900 text-white hover:bg-gray-800 dark:bg-blue-700 dark:hover:bg-blue-800 h-10 px-4 py-2 sm:w-auto"
+            className="w-full sm:w-auto inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 bg-gray-900 text-white hover:bg-gray-800 dark:bg-blue-700 dark:hover:bg-blue-800 h-10 px-4 py-2"
           >
             Done
           </button>
@@ -224,7 +224,7 @@ function Profile() {
           Update your Skill set.
         </p>
         <div className="rounded-lg p-5 w-full flex flex-col space-y-4 bg-gray-800 ">
-          <div className="flex items-center space-x-3">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 space-y-4 sm:space-y-0">
             <LucidePenLine className="text-xl" />
             <label htmlFor="skill" className="text-xl font-medium">
               Skill
@@ -234,12 +234,12 @@ function Profile() {
               id="skill"
               value={skill}
               placeholder="Add Skill.."
-              className="flex h-10 w-1/3 rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-400 dark:focus:ring-gray-500"
+              className="flex h-10 w-full sm:w-1/3 rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-400 dark:focus:ring-gray-500"
               onChange={(e) => setSkill(e.target.value)}
             />
             <button
               onClick={() => addSkill()}
-              className="w-full inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 bg-gray-900 text-white hover:bg-gray-800 dark:bg-blue-700 dark:hover:bg-blue-800 h-10 px-4 py-2 sm:w-auto"
+              className="w-full sm:w-auto inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 bg-gray-900 text-white hover:bg-gray-800 dark:bg-blue-700 dark:hover:bg-blue-800 h-10 px-4 py-2"
             >
               Done
             </button>

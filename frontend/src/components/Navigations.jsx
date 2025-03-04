@@ -98,7 +98,7 @@ function Navigations() {
             )}`}
           >
             <Calendar className="h-5 w-5" />
-            Doubts
+            Tasks
           </Link>
           <Link
             to={'material'}
