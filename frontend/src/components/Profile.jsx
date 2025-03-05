@@ -4,6 +4,7 @@ import { userContext } from "../context/userContext";
 import axios from "axios";
 import noimage from "../../public/noImage.webp";
 import { FaPlus } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 function Profile() {
   const { user, setUser, data, setData } = useContext(userContext);
@@ -29,8 +30,10 @@ function Profile() {
             },
           }
         );
+        toast.success("Avatar updated successfully");
+        setUser({ ...user, avatar: base64Image });
       } catch (error) {
-        console.log(error);
+        toast.error("Failed to update Avatar");
       }
     };
   };
@@ -48,9 +51,10 @@ function Profile() {
           },
         }
       );
+      toast.success("Username updated successfully");
       setUser(response.data);
     } catch (error) {
-      console.log(error);
+      toast.error("Failed to update Username");
     }
   };
 
@@ -67,8 +71,10 @@ function Profile() {
           },
         }
       );
+      setData({...data, dsaLanguage: language });
+      toast.success("Language updated successfully");
     } catch (error) {
-      console.log(error);
+      toast.error("Failed to update Language");
     }
   };
 
@@ -88,8 +94,9 @@ function Profile() {
       setData({ ...data, skills: [...data.skills, skill] });
       setSkills([...skills, skill]);
       setSkill("");
+      toast.success("Skill added successfully");
     } catch (error) {
-      console.log(error);
+      toast.error("Failed to add Skill");
     }
   };
 
@@ -108,8 +115,9 @@ function Profile() {
       );
       setData({ ...data, skills: data.skills.filter((_, i) => i !== index) });
       setSkills(skills.filter((_, i) => i !== index));
+      toast.success("Skill deleted successfully");
     } catch (error) {
-      console.log(error);
+      toast.error("Failed to delete Skill");
     }
   };
 

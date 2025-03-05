@@ -3,6 +3,7 @@ import { SiCodechef, SiLeetcode, SiGeeksforgeeks } from "react-icons/si";
 import { FaHackerrank } from "react-icons/fa";
 import { userContext } from "../context/userContext";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 function Platforms() {
   const { data } = useContext(userContext);
@@ -39,11 +40,12 @@ function Platforms() {
               },
             }
           );
+          toast.success("Leetcode updated successfully");
         } else {
-          alert("Please provide correct leetcode username");
+          toast.error("Invalid Leetcode Username");
         }
       } catch (error) {
-        console.log(error);
+        toast.error("Failed to update Leetcode");
       }
     } else if (platform === "GFG") {
     } else if (platform === "codechef") {

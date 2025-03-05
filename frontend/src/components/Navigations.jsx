@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import noimage from '../../public/noImage.webp';
 import nscc from '../../public/Newton-School.png';
+import toast from 'react-hot-toast';
 
 function Navigations() {
   const { user, setUser } = useContext(userContext);
@@ -30,6 +31,8 @@ function Navigations() {
       }
     );
     localStorage.removeItem('token');
+    toast.success('Logged out successfully');
+    setUser({});
     navigate('/login');
   };
 
@@ -52,7 +55,7 @@ function Navigations() {
         </button>
       </div>
       <div
-        className={`fixed lg:relative lg:translate-x-0 transform ${
+        className={`fixed lg:translate-x-0 transform ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } transition-transform duration-300 ease-in-out lg:flex w-64 flex-col border-r min-h-screen h-full border-gray-800 bg-gray-900 z-40`}
       >
@@ -129,12 +132,12 @@ function Navigations() {
           </button>
         </nav>
       </div>
-      <div
+      {/* <div
         className={`flex-1 transition-all duration-300 ${
           isSidebarOpen ? 'ml-64' : 'ml-0'
         } lg:ml-64`} // Add margin-left when sidebar is open
       >
-      </div>
+      </div> */}
     </div>
   );
 }

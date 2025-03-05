@@ -3,6 +3,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import img from '../../public/float.png'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -22,10 +23,11 @@ const LoginPage = () => {
                 withCredentials: true,
             });
             localStorage.setItem("token", user.data.token);
+            toast.success("Logged in successfully");
             navigate('/u/dashboard');
             await axios.post('http://localhost:8080/api/dashboard/refresh', {});
         } catch (error) {
-            console.log("chuda");
+            toast.error(error.response.data.msg);
         }
     }
 

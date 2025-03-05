@@ -3,6 +3,7 @@ import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 import logo from '../../public/float.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const SignupPage = () => {
     const navigate = useNavigate();
@@ -23,7 +24,7 @@ const SignupPage = () => {
             const user = await axios.post('http://localhost:8080/api/auth/signup', userData);
             localStorage.setItem("token", user.data.token);
         } catch (error) {
-            alert(error.response.data.message);
+            toast.error(error.response.data.msg);
         }
         try {
             const token = localStorage.getItem("token");
@@ -32,9 +33,10 @@ const SignupPage = () => {
                     Authorization: `Bearer ${token}`,
                 },
             });
+            toast.success("User Signed up successfully");
             navigate('/u/dashboard');
         } catch (error) {
-            console.log(error.message);
+            toast.error(error.response.data.msg);
         }
         setEmail("");
         setPassword("");
