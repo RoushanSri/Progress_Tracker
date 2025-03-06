@@ -75,10 +75,11 @@ const dashboardSchema = mongoose.Schema({
         type: String,
         default:""
     },
-    projects:{
-        type: Array,
-        default:[]
-    }
+    projects:[
+        {
+            type:Object
+        }
+    ]
 })
 
 const Dashboard = mongoose.model('Dashboard', dashboardSchema);

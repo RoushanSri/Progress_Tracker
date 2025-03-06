@@ -15,6 +15,7 @@ import SignupPage from "./pages/SignupPage";
 import MainLayout from "./pages/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import TargetUser from "./pages/TargetUser";
+import Activities from "./components/Activities";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="material" element={<Material />} />
           <Route path="doubts" element={<Doubts />} />
           <Route path="leaderboard" element={<Leaderboard />} />
+          <Route path="activities" element={<Activities />} />
           <Route path={`dashboard/:id`} element={<TargetUser/>} />
           <Route
           path="settings"
@@ -47,6 +49,7 @@ function App() {
           <Route path="" element={<Profile />} />
           <Route path="socials" element={<Socials />} />
           <Route path="platforms" element={<Platforms />} />
+          <Route path="projects" element={<Activities/>}/>
           <Route path="account" element={<Account />} />
         </Route>
         </Route>

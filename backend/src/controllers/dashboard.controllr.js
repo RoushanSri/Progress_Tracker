@@ -1,3 +1,4 @@
+import cloudinary from "../lib/cloudinary.js";
 import Dashboard from "../models/dashboard.model.js";
 import axios from 'axios'
 
@@ -227,4 +228,29 @@ const deleteSkill = async(req, res) => {
     }
 }
 
-export { getDashboard, createDashboard, addSkill, editLanguage, getLeetcode, updateLeetcode, refreshAll, getAll, deleteSkill, getTargetUser };
+const addProject = async(req, res) => {
+  const {base64Image, projectName, githubUrl, description, websiteUrl}=req.body;
+  if(!githubUrl||!base64Image||!projectName||!description) return res.status(400).json({msg: 'Please fill all the fields'});
+  try {
+    const coverImage = await cloudinary.uploader.upload(base64Image);
+    const project={
+      coverImage: coverImage.url,
+      projectName,
+      githubUrl,
+      description,
+      websiteUrl
+    }
+    
+    const dashboard = await Dashboard.findOneAndUpdate({ user: req.user._id },{
+      $push: { projects: project }
+    },
+    { new: true });
+    
+    if (!dashboard) return res.status(404).json({ msg: "Dashboard not found" });
+    res.status(200).json(dashboard);
+    } catch (err) {
+    res.status(500).json({ msg: "Server error" });
+    }
+}
+
+export { getDashboard, createDashboard, addSkill, editLanguage, getLeetcode, updateLeetcode, refreshAll, getAll, deleteSkill, getTargetUser,addProject };

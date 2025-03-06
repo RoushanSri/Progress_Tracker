@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FiMoon, FiSun } from "react-icons/fi";
-import { LayoutDashboard, MessageCircle, User, Wrench } from "lucide-react";
+import { LayoutDashboard, MessageCircle, Projector, User, Wrench } from "lucide-react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 
 const SettingsPage = () => {
@@ -65,6 +65,16 @@ const SettingsPage = () => {
                   <LayoutDashboard className="w-5 h-5 mr-2" />
                   <Link to={"platforms"} className="text-gray-800 w-full text-xl dark:text-gray-200">
                     Platforms
+                  </Link>
+                </li>
+                <li
+                  className={`mb-2 flex items-center rounded-lg p-2 ${
+                    location.pathname === "/u/settings/projects" ? "bg-gray-800 border-2 border-gray-700" : ""
+                  }`}
+                >
+                  <Projector className="w-5 h-5 mr-2" />
+                  <Link to={"projects"} className="text-gray-800 w-full text-xl dark:text-gray-200">
+                    Projects
                   </Link>
                 </li>
                 <li

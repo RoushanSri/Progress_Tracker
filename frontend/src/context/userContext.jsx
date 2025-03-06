@@ -13,7 +13,15 @@ const UserContextProvider = ({children}) => {
         dsaLanguage:'',
         rank: '',
         skills: [],
-        projects: [],
+        projects: [
+            {
+                base64Image:'',
+                projectName:'',
+                githubUrl:'',
+                description:'',
+                websiteUrl:''
+            }
+        ],
         past5: [0,0,0,0,0],
         leetcode:{
             url: '',
