@@ -1,6 +1,5 @@
 import User from "../models/user.model.js";
 import cloudinary from '../lib/cloudinary.js';
-import axios from 'axios';
 
 const signUp=async(req, res)=>{
     const {username, email, password} = req.body;

@@ -9,10 +9,7 @@ import { Star } from "lucide-react";
 
 function Dashboard() {
   const { user, data } = useContext(userContext);
-  const [date, setDate] = useState("");
-
-  console.log(data.projects);
-  
+  const [date, setDate] = useState("");  
 
   useEffect(() => {
     const date = new Date();
