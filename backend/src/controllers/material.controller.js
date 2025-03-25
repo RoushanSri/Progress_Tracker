@@ -7,7 +7,11 @@ const addMaterial = async (req, res)=>{
         if(!title ||!tag ||!base64Image ||!type){
             return res.status(400).json({msg: 'Please fill all the fields'});
         }
-        const response = await cloudinary.uploader.upload(base64Image);
+        const response = await cloudinary.uploader.upload(base64Image,{
+            resource_type: "raw",
+            public_id: title,
+            format: type,
+        });
 
         const link = response.url;
         

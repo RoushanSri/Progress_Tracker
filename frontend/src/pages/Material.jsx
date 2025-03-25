@@ -25,7 +25,7 @@ const Material = () => {
   }
 };
   fetchMaterials();
-  },[])
+  },[materials])
 
   const toggleViewMode = () => setViewMode(viewMode === 'grid' ? 'list' : 'grid');
 
@@ -65,8 +65,9 @@ const Material = () => {
     setShowUploadModal(false);
   };
 
-  const openFile = (file) => {
-    //file open krna h
+  const downloadFile = (file) => {
+    const pdfUrl = file.link
+    window.open(pdfUrl, "_blank");
   };
 
   return (
@@ -111,7 +112,7 @@ const Material = () => {
         </div>
             <hr/>
         {viewMode === 'grid' ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-5">
             {materials?.length === 0 && (
             <div className={`rounded-lg overflow-hidden ${darkMode ? 'bg-gray-800' : 'bg-white'} absolute top-1/2 right-1/2 shadow-sm p-6 text-center`}>
               <h3 className="text-lg font-medium">No files found</h3>
@@ -120,12 +121,12 @@ const Material = () => {
             {materials?.map((file, idx) => (
               <div 
                 key={idx + 1} 
-                onClick={() => openFile(file)}
+                onClick={() => downloadFile(file)}
                 className={`${darkMode ? 'bg-gray-900 hover:bg-gray-800 hover:scale-105' : 'bg-white hover:bg-gray-50'} 
                   rounded-lg overflow-hidden shadow-sm cursor-pointer transition-all duration-200 hover:shadow-md`}
               >
                 <div className={`h-32 flex items-center justify-center ${darkMode ? 'bg-gray-800' : 'bg-gray-100'}`}>
-                  {file.type === 'xlsx' ? (
+                  {file?.type === 'xlsx' ? (
                     <FileSpreadsheet size={48} className="text-green-500" />
                   ) : (
                     <FileText size={48} className="text-red-500" />
@@ -133,18 +134,18 @@ const Material = () => {
                 </div>
                 <div className="p-4">
                   <div className="flex items-start justify-between">
-                    <h3 className="font-medium truncate" title={file.title}>{file.title}</h3>
+                    <h3 className="font-medium truncate" title={file?.title}>{file?.title}</h3>
                   </div>
                   <div className="mt-2 flex items-center justify-between">
-                  <span className="text-xs text-gray-500">Author:{file.author.username}</span>
-                    <span className="text-xs text-gray-500">{file.date}</span>
+                  <span className="text-xs text-gray-500">Author:{file?.author.username}</span>
+                    <span className="text-xs text-gray-500">{file?.date}</span>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className={`rounded-lg overflow-hidden ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm`}>
+          <div className={`rounded-lg overflow-hidden ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-sm mt-5`}>
             <table className="w-full">
               <thead className={`${darkMode ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-600'} text-xs uppercase`}>
                 <tr>
@@ -163,26 +164,26 @@ const Material = () => {
                 {materials?.map((file, idx) => (
                   <tr 
                     key={idx+1} 
-                    onClick={() => openFile(file)}
+                    onClick={() => downloadFile(file)}
                     className={`${darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-50'} cursor-pointer`}
                   >
                     <td className="px-6 py-4">
                       <div className="flex items-center">
-                        <span className="mr-3">{file.type==="xlsx"?
+                        <span className="mr-3">{file?.type==="xlsx"?
                         <FileSpreadsheet size={24} className="text-green-500" />:
                         <FileText size={24} className="text-red-500" />
                         }</span>
-                        <span className="font-medium">{file.title}</span>
+                        <span className="font-medium">{file?.title}</span>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">{file.date}</td>
-                    <td className="px-6 py-4 text-sm text-gray-500">Author:{file.author.username}</td>
+                    <td className="px-6 py-4 text-sm text-gray-500">{file?.date}</td>
+                    <td className="px-6 py-4 text-sm text-gray-500">Author:{file?.author.username}</td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end space-x-2">
                         <button 
                           onClick={(e) => {
                             e.stopPropagation();
-                            alert(`Downloading ${file.title}`);
+                            alert(`Downloading ${file?.title}`);
                           }}
                         >
                           <Download size={16} className="text-gray-400 hover:text-gray-300" />
