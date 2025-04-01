@@ -182,8 +182,7 @@ function Dashboard() {
                     <a href={project.url} target="_blank" rel="noopener noreferrer" className="text-white text-sm md:text-base mb-2">
                       View Project
                     </a>)}
-                    <a href={project.githubUrl} className="bg-gray-700 gap-2 flex text-gray-300 mb-1 p-1 px-2 rounded-full items-center w-fit"><img src={git} alt="git" className="w-5 h-5"/>{project.githubUrl.split("com/")[1]}</a>
-                    </div>
+                    <a href={project.githubUrl} target="blank" className="bg-gray-700 gap-2 flex text-gray-300 mb-1 p-1 px-2 rounded-full items-center xl:w-fit"><img src={git} alt="git" className="w-5 h-5"/><p className='overflow-hidden'>{project.githubUrl.split("com/")[1]}</p></a>                    </div>
                   </div>
                 ))}
               </div>
