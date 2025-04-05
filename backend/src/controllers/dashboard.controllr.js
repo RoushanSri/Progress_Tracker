@@ -39,7 +39,14 @@ const getDashboard = async (req, res) => {
         hard:dashboard.leetcode.hard,
         calendar:dashboard.leetcode.calendar,
         username:dashboard.leetcode.username
-      }
+      },
+      github:{
+        url:dashboard.github.url,
+        contributions:dashboard.github.contributions,
+        prs:dashboard.github.prs,
+        repos:dashboard.github.repos,
+        username:dashboard.github.username
+      },
     }
     res.json(data);
   } catch (error) {
@@ -69,6 +76,13 @@ const getTargetUser = async (req, res) => {
         hard:dashboard.leetcode.hard,
         calendar:dashboard.leetcode.calendar,
         username:dashboard.leetcode.username
+      },
+      github:{
+        url:dashboard.github.url,
+        contributions:dashboard.github.contributions,
+        prs:dashboard.github.prs,
+        repos:dashboard.github.repos,
+        username:dashboard.github.username
       }
     }
     res.json(data);
@@ -188,8 +202,21 @@ const refreshAll = async (req, res) => {
                   item.leetcode.medium = matchedUser.submitStats.acSubmissionNum[2].count;
                   item.leetcode.hard = matchedUser.submitStats.acSubmissionNum[3].count;
                   item.leetcode.calendar = matchedUser.submissionCalendar;
-                  item.save();
-              }})
+                  await item.save();
+              }
+              if (item.github.url != "") {
+                  const data = await axios.post("http://localhost:8080/api/settings/platform/githubStats",
+                     {username: item.github.username}
+                  );
+                  const matchedUser = await data.data;
+                  item.github.contributions = matchedUser.totalContributions;
+                  item.github.prs = matchedUser.totalPullRequests;
+                  item.github.repos = matchedUser.totalRepositories;
+                  await item.save();
+              }
+
+            })
+
   } catch (error) {
     console.log(error);
   }

@@ -6,6 +6,7 @@ import { LuPenLine } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import git from "../../public/github.webp";
 import { Star } from "lucide-react";
+import { IoStatsChartSharp } from "react-icons/io5";
 
 function Dashboard() {
   const { user, data } = useContext(userContext);
@@ -80,7 +81,7 @@ function Dashboard() {
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-7 my-4 md:my-5">
         <div className="bg-gray-900 border-2 flex text-white flex-col border-gray-800 rounded-xl p-4 md:p-7">
-          <h2 className="text-xl md:text-2xl font-medium">Statistics</h2>
+          <h2 className="flex items-center gap-2"><IoStatsChartSharp size={"1.5rem"}/><span className="text-xl md:text-2xl font-medium">DSA Stats</span></h2>
           
           <div className="grid grid-cols-3 gap-2 md:gap-5 w-full my-4 md:my-5 md:mb-10">
             <div className="border w-full flex flex-col justify-center items-center border-gray-700 rounded-lg py-3">
@@ -102,21 +103,32 @@ function Dashboard() {
               <span className="text-base md:text-xl">Hard</span>
             </div>
           </div>
+
+          <h2 className="flex items-center gap-2"><img src={git} alt="" className="w-8"/><span className="text-xl md:text-2xl font-medium">GitHub Stats</span></h2>
           
-          <div className="flex flex-col sm:flex-row w-full items-start sm:items-center sm:space-x-4 md:space-x-12 mt-2">
-            <div className="text-lg md:text-xl items-center gap-2 font-medium mb-3 flex">
-              <h2>Language for DSA</h2>
-              <Link to={"/u/settings"} className="opacity-70 hover:opacity-100 duration-200">
-                <LuPenLine />
-              </Link>
+          <div className="grid grid-cols-3 gap-2 md:gap-5 w-full my-4 md:my-5 md:mb-10">
+            <div className="border w-full flex flex-col justify-center items-center border-gray-700 rounded-lg py-3">
+              <h1 className="text-cyan-400 text-2xl md:text-3xl font-medium">
+                {data.github.contributions}
+              </h1>
+              <span className="text-base md:text-xl">Contributions</span>
             </div>
-            <span className="text-xl md:text-2xl w-fit font-medium border border-gray-700 rounded-lg p-2 md:p-3">
-              {data.dsaLanguage}
-            </span>
+            <div className="border w-full flex flex-col justify-center items-center border-gray-700 rounded-lg py-3">
+              <h1 className="text-2xl md:text-3xl text-orange-400 font-medium">
+                {data.github.prs}
+              </h1>
+              <span className="text-base md:text-xl">Total PRs</span>
+            </div>
+            <div className="border w-full flex flex-col justify-center items-center border-gray-700 rounded-lg py-3">
+              <h1 className="text-2xl md:text-3xl text-red-700 font-medium">
+                {data.github.repos}
+              </h1>
+              <span className="text-base md:text-xl">Total Repos</span>
+            </div>
           </div>
         </div>
-        <div className="bg-gray-900 border-2 flex flex-col border-gray-800 text-white rounded-xl p-4 md:p-7">
-          <div className="mb-4 md:mb-8 h-auto md:h-1/2">
+        <div className="bg-gray-900 border-2 flex flex-col border-gray-800 text-white rounded-xl p-4 md:p-7 justify-between">
+          <div className="mb-4 md:mb-8 h-auto md:h-1/3">
             <div className="text-xl md:text-2xl flex items-center gap-2 font-medium mb-4 md:mb-7">
               <h2>Skills</h2>
               <Link to="/u/settings" className="opacity-70 hover:opacity-100 duration-200">
@@ -138,8 +150,20 @@ function Dashboard() {
               )}
             </div>
           </div>
+
+          <div className="flex flex-col sm:flex-row w-full items-start sm:items-center sm:space-x-4 md:space-x-12 mt-4">
+            <div className="text-lg md:text-xl items-center gap-2 font-medium mb-3 flex">
+              <h2>Language for DSA</h2>
+              <Link to={"/u/settings"} className="opacity-70 hover:opacity-100 duration-200">
+                <LuPenLine />
+              </Link>
+            </div>
+            <span className="text-xl md:text-2xl w-fit font-medium border border-gray-700 rounded-lg p-2 md:p-3">
+              {data.dsaLanguage}
+            </span>
+        </div>
           
-          <div className="w-fit flex flex-col items-start md:items-center mt-4">
+          <div className="w-fit flex flex-col items-start md:items-center">
             <h2 className="text-lg md:text-xl font-medium mb-2 md:mb-3">Platforms</h2>
             <div className="flex">
               {data.leetcode.url !== "" && (

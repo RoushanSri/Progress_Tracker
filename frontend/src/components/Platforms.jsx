@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { SiCodechef, SiLeetcode, SiGeeksforgeeks } from "react-icons/si";
+import { SiCodechef, SiLeetcode, SiGeeksforgeeks, SiGithub } from "react-icons/si";
 import { FaHackerrank } from "react-icons/fa";
 import { userContext } from "../context/userContext";
 import axios from "axios";
@@ -11,6 +11,7 @@ function Platforms() {
   const [gfgUsername, setGfgUsername] = useState("");
   const [hackerank, setHackerank] = useState("");
   const [codechef, setCodechef] = useState("");
+  const [github, setGithub] = useState(data.github.username);
   const [leetcodeUsername, setLeetcodeUsername] = useState(
     data.leetcode.username
   );
@@ -46,6 +47,34 @@ function Platforms() {
         }
       } catch (error) {
         toast.error("Failed to update Leetcode");
+      }
+    }
+    else if (platform === "github") {
+      try {        
+        const data = await axios.post(
+          "http://localhost:8080/api/settings/platform/githubStats",
+          { username: github },
+        );
+
+        const response = await axios.post(
+          "http://localhost:8080/api/settings/platform/updateGithub",
+          {
+            data: data.data,
+            username: github,
+          }, 
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          },
+        });
+        
+        if(response.status === 200){
+          toast.success("Github updated successfully");
+        } else {
+          toast.error("Invalid Github Username");
+        }
+      } catch (error) {
+        toast.error("Failed to update Github");
       }
     } else if (platform === "GFG") {
     } else if (platform === "codechef") {
@@ -147,6 +176,28 @@ function Platforms() {
           <button
             type="submit"
             onClick={() => handlePlatform("codechef")}
+            className="w-full sm:w-auto inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 bg-gray-900 text-white hover:bg-gray-800 dark:bg-blue-700 dark:hover:bg-blue-800 h-10 px-4 py-2"
+          >
+            Submit
+          </button>
+        </div>
+        <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:items-center sm:space-x-4">
+          <div className="flex items-center space-x-2">
+            <SiGithub className="text-white" size={"1.5rem"} />
+            <label htmlFor="github" className="w-[7rem]">
+              Github
+            </label>
+          </div>
+          <input
+            type="text"
+            placeholder="Github Username"
+            onChange={(e) => setGithub(e.target.value)}
+            value={github}
+            className="flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:placeholder:text-gray-400 dark:focus:ring-gray-500"
+          />
+          <button
+            type="submit"
+            onClick={() => handlePlatform("github")}
             className="w-full sm:w-auto inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 bg-gray-900 text-white hover:bg-gray-800 dark:bg-blue-700 dark:hover:bg-blue-800 h-10 px-4 py-2"
           >
             Submit

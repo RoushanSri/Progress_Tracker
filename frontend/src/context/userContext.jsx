@@ -31,7 +31,14 @@ const UserContextProvider = ({children}) => {
             hard:'',
             calendar: '',
             username: ''
-        }
+        },
+        github:{
+            url: '',
+            contributions: 0,
+            prs: 0,
+            repos: 0,
+            username: ''
+        },
     });
 
     return (

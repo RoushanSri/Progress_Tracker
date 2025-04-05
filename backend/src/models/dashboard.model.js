@@ -69,6 +69,18 @@ const dashboardSchema = mongoose.Schema({
         contributions:{
             type: Number,
             default:0
+        },
+        prs:{
+            type: Number,
+            default:0
+        },
+        repos:{
+            type: Number,
+            default:0
+        },
+        username:{
+            type: String,
+            default:""
         }
     },
     languageForDsa:{
