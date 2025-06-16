@@ -123,6 +123,7 @@ function Platforms() {
           </div>
           <input
             type="text"
+            disabled
             id="gfg"
             placeholder="GFG Username"
             onChange={(e) => setGfgUsername(e.target.value)}
@@ -146,6 +147,7 @@ function Platforms() {
           </div>
           <input
             type="text"
+            disabled
             placeholder="Hackerank Username"
             onChange={(e) => setHackerank(e.target.value)}
             value={hackerank}
@@ -168,6 +170,7 @@ function Platforms() {
           </div>
           <input
             type="text"
+            disabled
             placeholder="Code chef Username"
             onChange={(e) => setCodechef(e.target.value)}
             value={codechef}

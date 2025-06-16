@@ -19,8 +19,9 @@ const Leaderboard = () => {
     <div className="mx-auto p-4 bg-gray-950 min-h-screen flex flex-col items-center">
       <h1 className="text-4xl font-extrabold my-4 text-center text-white drop-shadow-lg">
         Leaderboard🚀
-      </h1>
-      <div className="w-full p-4 md:p-12 pt-4">
+      </h1><div className="w-full p-4 md:p-12 pt-4">
+        {data.length!==0 ? (
+          <>
         <div className="flex flex-col md:flex-row w-full justify-between space-y-4 md:space-y-0 md:space-x-8 items-center mb-4">
           {data?.map((item, index) => (
             index < 3 && (
@@ -97,6 +98,11 @@ const Leaderboard = () => {
             </tbody>
           </table>
         </div>
+        </>):(
+          <div className="justify-center w-full item-center">
+            <p className="text-white text-center">No user exist in present</p>
+          </div>
+      )}
       </div>
     </div>
   );

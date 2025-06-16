@@ -49,16 +49,6 @@ const SettingsPage = () => {
                 </li>
                 <li
                   className={`mb-2 flex items-center rounded-lg p-2 ${
-                    location.pathname === "/u/settings/socials" ? "bg-gray-800 border-2 border-gray-700" : ""
-                  }`}
-                >
-                  <MessageCircle className="w-5 h-5 mr-2" />
-                  <Link to={"socials"} className="text-gray-800 w-full text-xl dark:text-gray-200">
-                    Socials
-                  </Link>
-                </li>
-                <li
-                  className={`mb-2 flex items-center rounded-lg p-2 ${
                     location.pathname === "/u/settings/platforms" ? "bg-gray-800 border-2 border-gray-700" : ""
                   }`}
                 >
@@ -69,12 +59,22 @@ const SettingsPage = () => {
                 </li>
                 <li
                   className={`mb-2 flex items-center rounded-lg p-2 ${
-                    location.pathname === "/u/settings/projects" ? "bg-gray-800 border-2 border-gray-700" : ""
+                    location.pathname === "/u/settings/RemoveProjects" ? "bg-gray-800 border-2 border-gray-700" : ""
+                  }`}
+                >
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  <Link to={"RemoveProjects"} className="text-gray-800 w-full text-xl dark:text-gray-200">
+                    Remove Projects
+                  </Link>
+                </li>
+                <li
+                  className={`mb-2 flex items-center rounded-lg p-2 ${
+                    location.pathname === "/u/settings/AddProjects" ? "bg-gray-800 border-2 border-gray-700" : ""
                   }`}
                 >
                   <Projector className="w-5 h-5 mr-2" />
-                  <Link to={"projects"} className="text-gray-800 w-full text-xl dark:text-gray-200">
-                    Projects
+                  <Link to={"AddProjects"} className="text-gray-800 w-full text-xl dark:text-gray-200">
+                    Add Projects
                   </Link>
                 </li>
                 <li

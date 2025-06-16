@@ -89,7 +89,8 @@ const dashboardSchema = mongoose.Schema({
     },
     projects:[
         {
-            type:Object
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Project'
         }
     ]
 })

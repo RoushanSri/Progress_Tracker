@@ -197,16 +197,28 @@ function Dashboard() {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
                 {data.projects.map((project, index) => (
                   <div key={index} className="bg-gray-800 rounded-lg border border-gray-600 flex flex-col gap-2">
-                    <div className="w-full h-44 md:h-52 border-b-gray-600 border-b-2 rounded-t-lg overflow-hidden flex items-center justify-center">
-                    <img src={project.coverImage} alt={project.projectName} className="" />
+                    <div className="w-full aspect-video border-b-gray-600 border-b-2 rounded-t-lg overflow-hidden flex items-center justify-center">
+                      <img
+                        src={project.coverImage}
+                        alt={project.projectName}
+                        className="object-cover w-full h-full"
+                      />
                     </div>
                     <div className="p-4 pt-0">
-                    <p className="text-white text-start flex items-center gap-1 text-xl font-semibold mb-2"><Star color="gold" fill="gold"/>{project.projectName}</p>{
-                    project.websiteUrl!=="" &&(
-                    <a href={project.url} target="_blank" rel="noopener noreferrer" className="text-white text-sm md:text-base mb-2">
-                      View Project
-                    </a>)}
-                    <a href={project.githubUrl} target="blank" className="bg-gray-700 gap-2 flex text-gray-300 mb-1 p-1 px-2 rounded-full items-center xl:w-fit"><img src={git} alt="git" className="w-5 h-5"/><p className='overflow-hidden'>{project.githubUrl.split("com/")[1]}</p></a>                    </div>
+                      <p className="text-white text-start flex items-center gap-1 text-xl font-semibold mb-2">
+                        <Star color="gold" fill="gold"/>
+                        {project.projectName}
+                      </p>
+                      {project.websiteUrl !== "" && (
+                        <a href={project.url} target="_blank" rel="noopener noreferrer" className="text-white text-sm md:text-base mb-2">
+                          View Project
+                        </a>
+                      )}
+                      <a href={project.githubUrl} target="blank" className="bg-gray-700 gap-2 flex text-gray-300 mb-1 p-1 px-2 rounded-full items-center xl:w-fit">
+                        <img src={git} alt="git" className="w-5 h-5"/>
+                        <p className='overflow-hidden'>{project.githubUrl?.split("com/")[1]}</p>
+                      </a>
+                    </div>
                   </div>
                 ))}
               </div>

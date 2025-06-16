@@ -1,6 +1,7 @@
 import cloudinary from "../lib/cloudinary.js";
 import Dashboard from "../models/dashboard.model.js";
 import axios from 'axios'
+import Project from "../models/projects.model.js";
 
 const createDashboard = async (req, res) => {
   try {
@@ -20,7 +21,7 @@ const createDashboard = async (req, res) => {
 const getDashboard = async (req, res) => {
   try {
     const dashboard = await Dashboard.findOne({ user: req.user._id }).populate(
-      "user"
+      "user projects"
     );
     
     if (!dashboard) return res.status(404).json({ msg: "Dashboard not found" });
@@ -188,48 +189,67 @@ const updateLeetcode = async (req, res) => {
 const refreshAll = async (req, res) => {
   try {
     const dashData= await Dashboard.find({});
-              dashData.forEach(async item => {
-              if (item.leetcode.url != "") {                  
-                  const data = await axios.post(
-                      "http://localhost:8080/api/dashboard/leetcode",
-                      { leetcodeUsername: item.leetcode.username }
-                  );
+              await Promise.all(dashData.map(async (entry) => {
+              if (entry.leetcode.url != "") {                  
+                const leetcode = await axios.get(
+                `https://leetcode.com/graphql?query=query%20{%20matchedUser(username:%22${entry.leetcode.username}%22)%20{%20submissionCalendar%20submitStats%20{%20acSubmissionNum%20{%20count%20}%20}%20}%20}`
+                );
 
-                  const matchedUser = await data.data.data.matchedUser;
-                  item.past5 = await check(getPastFiveDays(), matchedUser.submissionCalendar);                  
-                  item.leetcode.solvedProblems = matchedUser.submitStats.acSubmissionNum[0].count;
-                  item.leetcode.easy = matchedUser.submitStats.acSubmissionNum[1].count;
-                  item.leetcode.medium = matchedUser.submitStats.acSubmissionNum[2].count;
-                  item.leetcode.hard = matchedUser.submitStats.acSubmissionNum[3].count;
-                  item.leetcode.calendar = matchedUser.submissionCalendar;
-                  await item.save();
+                  const matchedUser = await leetcode.data.data.matchedUser;
+                  if(!matchedUser) return;
+                  entry.past5 = await check(getPastFiveDays(), matchedUser.submissionCalendar);                  
+                  entry.leetcode.solvedProblems = matchedUser.submitStats.acSubmissionNum[0].count;
+                  entry.leetcode.easy = matchedUser.submitStats.acSubmissionNum[1].count;
+                  entry.leetcode.medium = matchedUser.submitStats.acSubmissionNum[2].count;
+                  entry.leetcode.hard = matchedUser.submitStats.acSubmissionNum[3].count;
+                  entry.leetcode.calendar = matchedUser.submissionCalendar;
+                  await entry.save();
               }
-              if (item.github.url != "") {
-                  const data = await axios.post("http://localhost:8080/api/settings/platform/githubStats",
-                     {username: item.github.username}
-                  );
-                  const matchedUser = await data.data;
-                  item.github.contributions = matchedUser.totalContributions;
-                  item.github.prs = matchedUser.totalPullRequests;
-                  item.github.repos = matchedUser.totalRepositories;
-                  await item.save();
+              if (entry.github.url != "") {
+                const response = await axios.post(
+                "https://api.github.com/graphql",
+                {
+                  query: `query {user(login: "${entry.username}") {contributionsCollection {contributionCalendar {totalContributions}}pullRequests {totalCount}repositories(privacy: PUBLIC) {totalCount}}}`,
+                },
+                {
+                  headers: {
+                    Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+                  },
+                }
+                );
+                  const data = response.data.data.user;
+                  if (!data) return;
+                  entry.github.contributions = data.contributionsCollection.contributionCalendar.totalContributions;
+                  entry.github.prs = data.pullRequests.totalCount;
+                  entry.github.repos = data.repositories.totalCount;
+                  await entry.save();
               }
 
             })
-
+          )
   } catch (error) {
     console.log(error);
   }
-  
+  return res.status(200).json({
+    message: "All LeetCode and Github entries refreshed successfully",
+  });
 }
 
 const getAll= async (req, res) => {
   try {
     const collection= await Dashboard.find({}).populate('user');
-    const ds=collection.map((item, key) => {
-      
-      return { user:item.user, name: item.user.username, avatar: item.user.avatar, score: item.leetcode.solvedProblems, language: item.languageForDsa, previous: item.past5 };
-    })
+    const ds = collection
+      .filter(item => item.leetcode && item.leetcode.url !== "")
+      .map(item => {
+      return {
+        user: item.user,
+        name: item.user.username,
+        avatar: item.user.avatar,
+        score: item.leetcode.solvedProblems,
+        language: item.languageForDsa,
+        previous: item.past5
+      };
+      });
     ds.sort((a, b) => b.score - a.score);
     ds.map(async(item, key) => {
       await Dashboard.findOneAndUpdate({ user: item.user }, { rank: key + 1 });
@@ -267,17 +287,38 @@ const addProject = async(req, res) => {
       description,
       websiteUrl
     }
-    
-    const dashboard = await Dashboard.findOneAndUpdate({ user: req.user._id },{
-      $push: { projects: project }
-    },
-    { new: true });
-    
+    const newProject = await Project.create({
+      ...project, 
+    });
+
+    if (!newProject) return res.status(500).json({ msg: "Failed to create project" });
+
+    const dashboard = await Dashboard.findOneAndUpdate({ user: req.user._id }, {
+      $push: { projects: newProject._id }
+    }, { new: true });
+
     if (!dashboard) return res.status(404).json({ msg: "Dashboard not found" });
-    res.status(200).json(dashboard);
+    res.status(200).json({ msg: "Project added successfully", project: newProject });
     } catch (err) {
     res.status(500).json({ msg: "Server error" });
     }
 }
 
-export { getDashboard, createDashboard, addSkill, editLanguage, getLeetcode, updateLeetcode, refreshAll, getAll, deleteSkill, getTargetUser,addProject };
+const removeProject = async(req, res)=>{
+  const { projectId } = req.query;
+
+  if (!projectId) {
+    throw new Error("Project ID is required", 400);
+  }
+
+  const deletedProject = await Project.findByIdAndDelete(projectId);
+
+   if (deletedProject.coverImage) {
+          const publicId = deletedProject.coverImage.split('/').pop().split('.')[0];
+          await cloudinary.uploader.destroy(publicId);
+  }
+
+  return res.status(200).json("project removed");
+}
+
+export { getDashboard, createDashboard, addSkill, editLanguage, getLeetcode, updateLeetcode, refreshAll, getAll, deleteSkill, getTargetUser,addProject, removeProject };

@@ -1,6 +1,6 @@
 import express from 'express';
 import verifyJwt from '../middlewares/auth.middleware.js';
-import { addProject, addSkill, createDashboard, deleteSkill, editLanguage, getAll, getDashboard, getLeetcode, getTargetUser, refreshAll, updateLeetcode } from '../controllers/dashboard.controllr.js';
+import { addProject, addSkill, createDashboard, deleteSkill, editLanguage, getAll, getDashboard, getLeetcode, getTargetUser, refreshAll, removeProject, updateLeetcode } from '../controllers/dashboard.controllr.js';
 
 const router = express.Router();
 
@@ -15,6 +15,7 @@ router.get('/getAll', getAll);
 router.post('/deleteSkill',verifyJwt, deleteSkill);
 router.get('/getDashboard/:id', getTargetUser);
 router.post('/addProject',verifyJwt, addProject);
+router.patch('/removeProject', verifyJwt, removeProject)
 
 
 export default router;

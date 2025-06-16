@@ -94,26 +94,6 @@ function Navigations() {
             Leaderboard
           </Link>
           <Link
-            to={'doubts'}
-            onClick={closeSidebar}
-            className={`w-full p-2 rounded-lg flex items-center text-[1.2rem] justify-start gap-2 text-gray-300 hover:bg-gray-800 hover:text-white ${getActiveClass(
-              '/u/doubts'
-            )}`}
-          >
-            <Calendar className="h-5 w-5" />
-            Tasks
-          </Link>
-          <Link
-            to={'material'}
-            onClick={closeSidebar}
-            className={`w-full p-2 rounded-lg items-center text-[1.2rem] flex justify-start gap-2 text-gray-300 hover:bg-gray-800 hover:text-white ${getActiveClass(
-              '/u/material'
-            )}`}
-          >
-            <Home className="h-5 w-5" />
-            Material
-          </Link>
-          <Link
             to={'settings'}
             onClick={closeSidebar}
             className={`w-full p-2 rounded-lg flex items-center text-[1.2rem] justify-start gap-2 text-gray-300 hover:bg-gray-800 hover:text-white ${getActiveClass(
@@ -132,12 +112,6 @@ function Navigations() {
           </button>
         </nav>
       </div>
-      {/* <div
-        className={`flex-1 transition-all duration-300 ${
-          isSidebarOpen ? 'ml-64' : 'ml-0'
-        } lg:ml-64`} // Add margin-left when sidebar is open
-      >
-      </div> */}
     </div>
   );
 }
