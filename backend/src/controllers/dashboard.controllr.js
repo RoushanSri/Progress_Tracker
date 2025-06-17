@@ -318,7 +318,13 @@ const removeProject = async(req, res)=>{
           await cloudinary.uploader.destroy(publicId);
   }
 
-  return res.status(200).json("project removed");
+  const dash = await Dashboard.findOne({ user: req.user._id }).populate("projects");
+
+  if (!dash) {
+    return res.status(404).json({ msg: "Dashboard not found" });
+  }
+
+  return res.status(200).json(dash.projects);
 }
 
 export { getDashboard, createDashboard, addSkill, editLanguage, getLeetcode, updateLeetcode, refreshAll, getAll, deleteSkill, getTargetUser,addProject, removeProject };

@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 
 function RemoveProjects() {
 
-  const { data } = useContext(userContext);
+  const { data, setData } = useContext(userContext);
 
   const handleRemove = async (id) => {
     try {
@@ -20,6 +20,11 @@ function RemoveProjects() {
         }
       );
       toast.success("Project removed Successfully")
+      
+      const project = await response.data;
+      console.log(project);
+      
+      setData({...data, projects:[...project]})
     } catch (error) {
       toast.error(error)
     }
